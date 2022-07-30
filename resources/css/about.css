@@ -5,7 +5,6 @@ html {
 /* ---------- header style below ---------- */
 header {
     padding: 3%;
-    color: red;
     position: sticky;
     top: 0;
     z-index: 5;
@@ -89,45 +88,6 @@ main .title {
     padding: 5%;
     margin: 5% 5% 25% 5%;
     font-size: 24px;
-}
-
-main .project {
-    margin-top: 40%;
-    position: relative;
-    background-color: bisque;
-    margin: 5%;
-} 
-
-img {
-    max-width: 100%;
-    display: block;
-    margin: auto;
-}
-
-main p {
-    background-color: #FAFAFA;
-    font-family: "Inter";
-    font-size: 22px;
-    font-weight: 600;
-    min-width: 20%;
-    visibility:visible
-}
-
-.onhover {
-    position: absolute; 
-    right: 40%;
-    bottom: 70%;
-    display: none;
-}
-
-.project img:hover + .onhover {
-    display: block;
-    color: #2C2C2C;
-}
-
-.onhover:hover {
-    display: block;
-    color: #2C2C2C;
 }
 
 .theme {
