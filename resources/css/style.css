@@ -4,34 +4,49 @@ html {
 
 /* ---------- header style below ---------- */
 header {
-    padding: 3%;
-    color: red;
+    width: auto;
+    height: 100px;
+    margin: 0% 2% 0% 2%;
     position: sticky;
-    top: 0;
-    z-index: 5;
+    top: 2%;
 }
 
 nav {
-    background-color: #DDDDDD;
+    background-color: #FAFAFA;
+    border: 1px solid #FAFAFA;
+    border-radius: 3px;
+    height: 50%;
     display: grid;
+    white-space: nowrap;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 100%;
 }
 
+.logo {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.menu {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
 .logo h1 {
-    background-color: #DDDDDD;
-    color: #424242;
+    display: inline-block;
+    position: absolute;
+    top: -5px;
+    color: #555555;
     font-family: "Inter";
     font-weight:  600;
     font-size: 22px;
-    grid-column-start: 1;
+    grid-column-start: 1; 
     grid-column-end: 4;
-    margin-left: 10%;
-    padding-left: 10%;
+    margin-left: 2.5%
 }
 
 .logo h1:hover {
-    color: #2C2C2C;
+    color: #373737;
 }
 
 .menu {
@@ -40,40 +55,43 @@ nav {
 }
 
 nav .menu {
-    background-color: #DDDDDD;
-    color: #424242;
+    background-color: #FAFAFA;
+    position: relative;
+    top: 0;
+    color: #555555;
     font-family: "Inter";
     font-size: 14px;
     text-align: end;
     margin-top: auto;
     margin-bottom: auto;
-    margin-right: 10%;
 }
 
 .work {
-    font-weight: 500;
+    font-weight: 600;
+    margin-right: 20%;
+    color:#373737;
+}
+
+.menu {
+    margin-right: 15%
 }
 
 .about:hover {
-    color: #2c2c2c;
-    font-weight: 500;
+    color: #373737;
 }
 
 .work:hover {
     color: #2c2c2c;
-    font-weight: 500;
 }
 
 .menu li {
     display: inline;
-    margin-right: 7.5%;
 }
 
 a {
     color: inherit;
     text-decoration: none
 }
-
 /* ---------- main style below ---------- */
 main {
     background-color: #FAFAFA;
@@ -137,31 +155,28 @@ main p {
 
 /* ---------- footer style below ---------- */
 footer {
-    padding: 0% 0% 3% 0%;
-    margin: 0% 3% 0% 3%;
+    margin: 0% 2% 0% 2%;
     position: sticky;
-    bottom: 0;
-    font-family: "Inter";
-    color: #9B9B9B;
+    bottom: 2%;
 }
 
 footer ul {
-    background-color: #DDDDDD;
-    padding: 1%;
-    margin-bottom: 0%;
-    text-align: center;
-    font-size: 14px;
+    background-color: #FAFAFA;
+    padding: 1% 2% 1% 1%;
+    border-radius: 3px;
+    text-align: right;
 }
 
-.links:hover {
-    color: #2c2c2c;
-    font-weight: 500;
+footer li {
+    display: inline-block;
+    padding-inline: 1.25%;
 }
 
-.links {
-    background-color: #DDDDDD;
-    color: #424242;
-    display: inline;
-    text-align: center;
-    padding-inline: 3%;
+footer img {
+    width: 75%;
+    filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(97%) contrast(95%);
+}
+
+footer img:hover {
+    filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(60%) contrast(95%);
 }
