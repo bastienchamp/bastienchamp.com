@@ -13,7 +13,6 @@ header {
 
 nav {
     background-color: #FAFAFA;
-    border: 1px solid #FAFAFA;
     border-radius: 3px;
     height: 50%;
     display: grid;
@@ -99,62 +98,38 @@ a {
 /* ---------- main style below ---------- */
 main {
     background-color: #FAFAFA;
-    text-align: center;
-    padding: 10% 3% 30% 3%;
+    padding: 7.5% 20% 20% 20%;
+    height: 1200px;
+    z-index: 2;
 }
 
-main .title {
-    background-color: #FAFAFA;
-    color: #2C2C2C;
-    font-family: "Inter";
-    text-align: center;
-    padding: 5%;
-    margin: 5% 5% 25% 5%;
-    font-size: 24px;
-}
-
-main .project {
-    margin-top: 40%;
+.aboutme {
+    background-color: #E0E0E0;
     position: relative;
-    background-color: bisque;
-    margin: 5%;
-} 
+    top: 100px;
+}
 
-img {
-    max-width: 100%;
-    display: block;
-    margin: auto;
+.picture {
+    height: 420px;
+    width: auto;
+    background-color: #E0E0E0;
+    background-image: url('/resources/img/about.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.bio {
+    background-color: #E0E0E0;
+    height: auto;
+    font-family: 'Inter';
+    font-size: 22px;
+    padding: 3%;
+    color: #2C2C2C;
 }
 
 main p {
-    background-color: #FAFAFA;
-    font-family: "Inter";
-    font-size: 22px;
-    font-weight: 600;
-    min-width: 20%;
-    visibility:visible
-}
+    line-height: 1.75;
 
-.onhover {
-    position: absolute; 
-    right: 40%;
-    bottom: 70%;
-    display: none;
-}
-
-.project img:hover + .onhover {
-    display: block;
-    color: #2C2C2C;
-}
-
-.onhover:hover {
-    display: block;
-    color: #2C2C2C;
-}
-
-.theme {
-    display: block;
-    background-color: #FAFAFA;
 }
 
 /* ---------- footer style below ---------- */
@@ -165,7 +140,6 @@ footer {
 }
 
 footer ul {
-    background-color: #FAFAFA;
     padding: 1% 2% 1% 1%;
     border-radius: 3px;
     text-align: right;
