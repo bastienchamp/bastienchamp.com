@@ -100,12 +100,12 @@ a {
 /* ---------- main style below ---------- */
 main {
     background-color: #FAFAFA;
-    padding: 7.5% 20% 20% 20%;
+    padding: 10% 20% 20% 20%;
     height: auto;
 }
 
 .aboutme {
-    background-color: #E0E0E0;
+    border-radius: 30px;
     position: relative;
     top: 100px;
 }
@@ -113,14 +113,25 @@ main {
 .picture {
     height: 420px;
     width: auto;
-    background-color: #E0E0E0;
     background-image: url('/resources/img/about.jpg');
     background-size: cover;
     background-position: center;
+    border-radius: 7px 7px 0px 0px;
+}
+
+.picture p {
+    font-family: 'inter';
+    color: #FFFFFF;
+    text-align: right;
+    position: relative;
+    right: 5%;
+    top: 90%;
+    font-weight: 600;
 }
 
 .bio {
     background-color: #E0E0E0;
+    border-radius: 0px 0px 7px 7px;
     height: auto;
     font-family: 'Inter';
     font-size: 22px;
