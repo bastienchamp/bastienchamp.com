@@ -100,7 +100,6 @@ main {
     background-color: #FAFAFA;
     padding: 7.5% 20% 20% 20%;
     height: 1200px;
-    z-index: 2;
 }
 
 .aboutme {
@@ -123,7 +122,7 @@ main {
     height: auto;
     font-family: 'Inter';
     font-size: 22px;
-    padding: 3%;
+    padding: 5%;
     color: #2C2C2C;
 }
 
@@ -152,9 +151,9 @@ footer li {
 
 footer img {
     width: 75%;
-    color: #373737;
+    filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(97%) contrast(95%);
 }
 
 footer img:hover {
-    color: #2C2C2C;
+    filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(60%) contrast(95%);
 }
