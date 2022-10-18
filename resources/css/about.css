@@ -85,7 +85,7 @@ nav .menu {
 }
 
 .work:hover {
-    color: #373737;
+    color: #000;
 }
 
 .menu li {
@@ -178,9 +178,9 @@ footer li {
 
 footer img {
     width: 75%;
-    filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(97%) contrast(95%);
+    color: #373737;
 }
 
 footer img:hover {
-    filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(60%) contrast(95%);
+    color: #2C2C2C;
 }
