@@ -9,6 +9,7 @@ header {
     margin: 0% 2% 0% 2%;
     position: sticky;
     top: 2%;
+    z-index: 10;
 }
 
 nav {
@@ -19,6 +20,7 @@ nav {
     white-space: nowrap;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 100%;
+    box-shadow: 0px -15px 2px 35px #FAFAFA;
 }
 
 .logo {
@@ -97,9 +99,9 @@ a {
 }
 /* ---------- main style below ---------- */
 main {
-    background-color: #FAFAFA;
+    background-color: #020012;
     padding: 7.5% 20% 20% 20%;
-    height: 1200px;
+    height: auto;
 }
 
 .aboutme {
@@ -133,23 +135,27 @@ main p {
 
 /* ---------- footer style below ---------- */
 footer {
+    background-color: #88FF82;
     margin: 0% 2% 0% 2%;
     position: sticky;
-    bottom: 2%;
+    bottom: -200px;
 }
 
 footer ul {
+    background-color: #FF9882;
     padding: 1% 2% 1% 1%;
     border-radius: 3px;
     text-align: right;
 }
 
 footer li {
+    background-color: #FF82E2;
     display: inline-block;
     padding-inline: 1.25%;
 }
 
 footer img {
+    background-color: #8B82FF;
     width: 75%;
     filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(97%) contrast(95%);
 }

@@ -7,9 +7,9 @@ header {
     width: auto;
     height: 100px;
     margin: 0% 2% 0% 2%;
-    padding: 0%;
     position: sticky;
     top: 2%;
+    z-index: 10;
 }
 
 nav {
@@ -20,7 +20,7 @@ nav {
     white-space: nowrap;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 100%;
-    box-shadow: 0px -25px #FAFAFA, 0px 25px 50px 50px #FAFAFA;
+    box-shadow: 0px -15px 2px 35px #FAFAFA;
 }
 
 .logo {
@@ -117,7 +117,7 @@ main .project {
     margin: 5%;
 } 
 
-img {
+main img {
     max-width: 100%;
     display: block;
     margin: auto;
@@ -156,23 +156,27 @@ main p {
 
 /* ---------- footer style below ---------- */
 footer {
+    background-color: #88FF82;
     margin: 0% 2% 0% 2%;
     position: sticky;
     bottom: 2%;
 }
 
 footer ul {
+    background-color: #FF9882;
     padding: 1% 2% 1% 1%;
     border-radius: 3px;
     text-align: right;
 }
 
 footer li {
+    background-color: #FF82E2;
     display: inline-block;
     padding-inline: 1.25%;
 }
 
 footer img {
+    background-color: #8B82FF;
     width: 75%;
     filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(97%) contrast(95%);
 }
