@@ -164,9 +164,12 @@ main .project1 {
 
 /* ---------- footer style below ---------- */
 footer {
-    margin: 0% 2% 0% 2%;
+    height: 40px;
+    width: 200px;
+    margin-left: auto;
+    margin-right: 3.5%;
     position: sticky;
-    bottom: 2%;
+    bottom: 2.5%;
 }
 
 footer ul {
@@ -177,7 +180,7 @@ footer ul {
 
 footer li {
     display: inline-block;
-    padding-inline: 1.25%;
+    padding-inline: 10%;
 }
 
 footer img {

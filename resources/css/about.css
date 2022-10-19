@@ -2,7 +2,7 @@ html {
     background-color: #FAFAFA;
 }
 
-/* ---------- header style below ---------- */
+/* ---------- HEADER STYLE BELOW ---------- */
 header {
     width: auto;
     height: 100px;
@@ -146,9 +146,12 @@ main p {
 
 /* ---------- footer style below ---------- */
 footer {
-    margin: 0% 2% 0% 2%;
+    height: 40px;
+    width: 200px;
+    margin-left: auto;
+    margin-right: 3.5%;
     position: sticky;
-    bottom: 2%;
+    bottom: 2.5%;
 }
 
 footer ul {
@@ -159,7 +162,7 @@ footer ul {
 
 footer li {
     display: inline-block;
-    padding-inline: 1.25%;
+    padding-inline: 10%;
 }
 
 footer img {
