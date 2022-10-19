@@ -120,6 +120,7 @@ main .forkit {
 
 main .projects {
     height: 500px;
+    width: 300px;
 } 
 
 main .project1 {
@@ -143,7 +144,7 @@ main .project1 {
     display: none;
     position: relative;
     bottom: 11%;
-    left: 2%;
+    left: 8%;
     font-family: 'Inter';
     font-size: 14px;
     font-weight: 400;
@@ -156,13 +157,16 @@ main .project1 {
     transition: 0.5s;
 }
 
+.onhover:hover {
+    display: block;
+    cursor: default;
+}
+
 /* ---------- footer style below ---------- */
 footer {
-    background-color: #FAFAFA;
     margin: 0% 2% 0% 2%;
     position: sticky;
     bottom: 2%;
-    z-index: -10;
 }
 
 footer ul {
@@ -172,7 +176,6 @@ footer ul {
 }
 
 footer li {
-    background-color: #FAFAFA;
     display: inline-block;
     padding-inline: 1.25%;
 }
@@ -184,4 +187,4 @@ footer img {
 
 footer img:hover {
     filter: invert(25%) sepia(0%) saturate(13%) hue-rotate(238deg) brightness(60%) contrast(95%);
-} 
+}
