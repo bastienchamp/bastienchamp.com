@@ -90,22 +90,22 @@ a {
 }
 /* ---------- MAIN STYLE BELOW ---------- */
 main {
-    background-color: #88FF82;
+    background-color: #FAFAFA;
     padding: 5% 4.25% 20% 4.25%;
 }
 
 main .title {
-    background-color: #FF9882;
+    background-color: #FAFAFA;
     color: #2C2C2C;
     font-family: "Inter";
     text-align: left;
     padding: 5% 0% 5% 0%;
-    margin: 5% 0% 25% 0%;
+    margin: 5% 0% 20% 0%;
     font-size: 24px;
 }
 
 main .forkit {
-    background-color: #FF82E2;
+    background-color: #FAFAFA;
     font-family: "Inter";
     font-size: 24px;
     visibility: visible;
@@ -120,8 +120,7 @@ main .forkit {
 /* -------------------//------------------- */
 
 main .projects {
-    margin-top: 20%;
-    background-color: #FF9882;
+    background-color: #FAFAFA;
     height: 500px;
 } 
 
