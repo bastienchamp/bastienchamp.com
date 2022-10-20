@@ -4,24 +4,24 @@ html {
 
 /* ---------- HEADER STYLE BELOW ---------- */
 header {
-    background-color: #FAFAFA;
     width: auto;
     height: 100px;
     margin: 0% 2% 0% 2%;
-    padding: 0% 1.75% 0% 0%;
+    padding: 0% 0% 0% 0%;
     position: sticky;
     top: 2%;
     z-index: 10;
 }
 
 nav {
+    background-color: #FAFAFA;
     border-radius: 3px;
     height: 50%;
     display: grid;
     white-space: nowrap;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 100%;
-    box-shadow: 0px -15px 1.5px 35px #FAFAFA;
+    box-shadow: 0px -20px 1.5px 35px #FAFAFA;
 }
 
 .logo {
@@ -84,12 +84,22 @@ a {
 }
 /* ---------- main style below ---------- */
 main {
-    background-color: #FAFAFA;
     padding: 0% 20% 20% 20%;
     height: auto;
 }
 
+@media only screen and (max-width: 768px) {
+    main {
+        padding: 0%;
+        margin: 0% 4% 24% 4%;
+    }
+    .aboutme {
+        border-radius: 0px;
+    }
+}
+
 .aboutme {
+    background-color: #000;
     border-radius: 10px;
     position: relative;
     top: 100px;
@@ -130,6 +140,12 @@ main p {
 }
 
 /* ---------- footer style below ---------- */
+@media only screen and (max-width: 768px) {
+    footer {
+        z-index: -1
+    }
+}
+
 footer {
     height: 40px;
     width: 200px;
