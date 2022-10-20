@@ -4,6 +4,7 @@ html {
 
 /* ---------- HEADER STYLE BELOW ---------- */
 header {
+    background-color: #FAFAFA;
     width: auto;
     height: 100px;
     margin: 0% 2% 0% 2%;
@@ -146,7 +147,7 @@ main .project1 {
     font-size: 1.25vw;
     font-weight: 400;
     position: relative;
-    top: -10%;
+    top: -8%;
     left: 2%;
 }
 
