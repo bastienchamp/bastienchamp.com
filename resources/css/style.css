@@ -7,13 +7,13 @@ header {
     width: auto;
     height: 100px;
     margin: 0% 2% 0% 2%;
+    padding: 0% 1.75% 0% 0%;
     position: sticky;
     top: 2%;
     z-index: 10;
 }
 
 nav {
-    background-color: #FAFAFA;
     border-radius: 3px;
     height: 50%;
     display: grid;
@@ -25,7 +25,7 @@ nav {
 
 .logo {
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 3;
 }
 
 .logo h1 {
@@ -48,18 +48,15 @@ nav {
 .menu {
     grid-column-start: 4;
     grid-column-end: 4;
-}
-
-nav .menu {
-    background-color: #FAFAFA;
     position: relative;
     top: 0;
     color: #555555;
     font-family: "Inter";
     font-size: 14px;
-    text-align: end;
+    justify-self: end;
     margin-top: auto;
     margin-bottom: auto;
+    width: 150px;
 }
 
 .work {
@@ -68,8 +65,8 @@ nav .menu {
     color:#373737;
 }
 
-.menu {
-    margin-right: 15%
+.about {
+    margin-left: 10%;
 }
 
 .about:hover {
