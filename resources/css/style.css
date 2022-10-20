@@ -8,7 +8,7 @@ header {
     width: auto;
     height: 100px;
     margin: 0% 2% 0% 2%;
-    padding: 0% 1.75% 0% 0%;
+    padding: 0% 0% 0% 0%;
     position: sticky;
     top: 2%;
     z-index: 10;
@@ -123,7 +123,6 @@ main .projects {
 } 
 
 main .project1 {
-    background-color: #88ff82;
     background-image: url("../img/project1.jpg");
     background-origin: border-box;
     background-repeat: no-repeat;
