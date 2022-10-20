@@ -86,7 +86,7 @@ nav .menu {
 
 a {
     color: inherit;
-    text-decoration: none
+    text-decoration: none;
 }
 /* ---------- MAIN STYLE BELOW ---------- */
 main {
@@ -119,18 +119,21 @@ main .forkit {
 /* -------------------//------------------- */
 
 main .projects {
-    height: 500px;
-    width: 300px;
+    max-width: 100%;
+    height: 60vw;
+    box-sizing: border-box;
 } 
 
 main .project1 {
-    background-image: url("../img/project1.png");
+    background-color: #88ff82;
+    background-image: url("../img/project1.jpg");
     background-origin: border-box;
     background-repeat: no-repeat;
-    background-position: 5% 30%;
+    background-position: center;
     background-color: #FFFFFF;
-    width: 300px;
-    height: 100%;
+    background-size: cover;
+    width: 22vw;
+    height: 30vw;
     border-radius: 10px;
     transition: 0.25s;
 }
@@ -142,23 +145,22 @@ main .project1 {
 
 .onhover {
     display: none;
-    position: relative;
-    bottom: 11%;
-    left: 8%;
     font-family: 'Inter';
-    font-size: 14px;
+    font-size: 1.25vw;
     font-weight: 400;
-    transition: 0.5s;
-}
-
-.project1:hover + .onhover {
-    display: block;
-    color: #555555;
-    transition: 0.5s;
+    position: relative;
+    top: -10%;
+    left: 2%;
 }
 
 .onhover:hover {
     display: block;
+    color: #FFFFFF;
+}
+      
+  .project1:hover + .onhover {
+    display: block;
+    color: #FFFFFF;
     cursor: default;
 }
 
