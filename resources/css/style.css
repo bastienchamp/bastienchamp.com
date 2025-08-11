@@ -120,10 +120,27 @@ main .projects {
     max-width: 100%;
     height: 100vw;
     box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3vw;
+    justify-content: left;
 } 
 
 main .project1 {
     background-image: url("../img/project1.jpg");
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #FFFFFF;
+    background-size: cover;
+    width: 22vw;
+    height: 30vw;
+    border-radius: 10px;
+    transition: 0.25s;
+}
+
+main .project2 {
+    background-image: url("../img/project2.jpg");
     background-origin: border-box;
     background-repeat: no-repeat;
     background-position: center;
@@ -140,25 +157,35 @@ main .project1 {
     transition: 0.5s;
 }
 
+.project2:hover {
+    box-shadow: 0px 0px 50px 5px rgba(0, 0, 0, 0.25);
+    transition: 0.5s;
+}
+
 .onhover {
     display: none;
     font-family: 'Inter';
-    font-size: 1.25vw;
+    font-size: 1.75vw;
     font-weight: 500;
     line-height: 1.80; 
     text-shadow: 0px 0px 8px black;
     position: relative;
-    top: -7%;
-    left: 2%;
-
+    top: -30%;
+    left: 10%;
 }
 
 .onhover:hover {
     display: block;
     color: #FFFFFF;
 }
-      
-  .project1:hover + .onhover {
+
+.project1:hover + .onhover {
+    display: block;
+    color: #FFFFFF;
+    cursor: default;
+}
+
+.project2:hover + .onhover {
     display: block;
     color: #FFFFFF;
     cursor: default;
