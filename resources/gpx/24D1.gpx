@@ -41,7 +41,9 @@
     <desc>Saint-Véran, 05350, France</desc>
   </wpt>
 <trk>
-  <name>945 Chem. de Prebarjaud to Saint-Véran</name>
+  <name>Fayence to Saint-Véran</name>
+  <bike>Multistrada 950 17'</bike>
+  <year>2024</year>
   <number>1</number>
   <trkseg>
   <trkpt lat="43.6355865" lon="6.6683591">

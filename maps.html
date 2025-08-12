@@ -12,6 +12,36 @@
     .top-bar { left: 0; right: 0; top: 0; height: 2.66vh; }
     .left-bar { left: 0; top: 0; bottom: 0; width: 2.66vh; }
     .right-bar { right: 0; top: 0; bottom: 0; width: 2.66vh; }
+
+    /* Modale custom */
+    .custom-modal {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 18px 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+      z-index: 9999;
+      max-width: 80vw;
+      line-height: 1.35;
+      text-align: center;
+    }
+    .custom-modal .title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .custom-modal .year {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .custom-modal .bike {
+      font-size: 14px;
+    }
   </style>
 </head>
 
@@ -21,6 +51,9 @@
   <div class="top-bar"></div>
   <div class="left-bar"></div>
   <div class="right-bar"></div>
+
+  <!-- Modale personnalisée -->
+  <div id="trackModal" class="custom-modal"></div>
 
   <script>
     function initMap() {
@@ -74,8 +107,16 @@
         '25': '#6B5154',
       };
 
-      // Un seul InfoWindow réutilisé pour tous les tracés
-      const infoWindow = new google.maps.InfoWindow();
+      const modal = document.getElementById('trackModal');
+
+      function esc(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
 
       gpxFiles.forEach(file => {
         fetch(file)
@@ -87,12 +128,15 @@
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(gpxText, "application/xml");
 
-            // 1) Récupération du <name> dans <trk>
             const trk = xmlDoc.getElementsByTagName('trk')[0];
             const nameNode = trk ? trk.getElementsByTagName('name')[0] : null;
-            const trackName = nameNode ? nameNode.textContent.trim() : 'Trajet';
+            const yearNode = (trk && trk.getElementsByTagName('year')[0]) || xmlDoc.getElementsByTagName('year')[0] || null;
+            const bikeNode = (trk && trk.getElementsByTagName('bike')[0]) || xmlDoc.getElementsByTagName('bike')[0] || null;
 
-            // 2) Extraction des coordonnées
+            const trackName = nameNode ? nameNode.textContent.trim() : 'Trajet';
+            const year = yearNode ? yearNode.textContent.trim() : '';
+            const bike = bikeNode ? bikeNode.textContent.trim() : '';
+
             const trkpts = xmlDoc.getElementsByTagName('trkpt');
             const coords = [];
             for (let i = 0; i < trkpts.length; i++) {
@@ -101,12 +145,10 @@
               coords.push({ lat: lat, lng: lon });
             }
 
-            // 3) Couleur selon les 2 premiers chiffres du fichier
             const match = file.match(/\/(\d{2})[^/]*\.gpx$/i);
             const prefix = match ? match[1] : null;
             const strokeColor = (prefix && colorByPrefix[prefix]) ? colorByPrefix[prefix] : undefined;
 
-            // 4) Création de la polyline
             const polyline = new google.maps.Polyline({
               path: coords,
               geodesic: true,
@@ -116,16 +158,17 @@
             });
             polyline.setMap(map);
 
-            // 5) Affichage du <name> au survol
-            polyline.addListener('mouseover', (e) => {
-              infoWindow.setContent(trackName);
-              // e.latLng donne la position de la souris sur le segment
-              infoWindow.setPosition(e.latLng);
-              infoWindow.open({ map });
+            polyline.addListener('mouseover', () => {
+              modal.innerHTML = `
+                <div class="title">${esc(trackName)}</div>
+                ${year ? `<div class="year">${esc(year)}</div>` : ''}
+                ${bike ? `<div class="bike">🏍️ ${esc(bike)}</div>` : ''}
+              `;
+              modal.style.display = 'block';
             });
 
             polyline.addListener('mouseout', () => {
-              infoWindow.close();
+              modal.style.display = 'none';
             });
           })
           .catch(error => console.error(`Erreur lors du chargement du GPX (${file}) :`, error));

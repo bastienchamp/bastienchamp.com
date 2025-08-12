@@ -25,7 +25,9 @@
     <desc>ISOLA 2000, Office de Tourisme d&apos;Isola 2000, 06420 Isola, France</desc>
   </wpt>
 <trk>
-  <name>Saint-Dalmas de Tende to ISOLA 2000</name>
+  <name>Saint-Dalmas de Tende to Isola 2000</name>
+  <bike>XTZ 750 Super Tenere 93'</bike>
+  <year>2023</year>
   <number>1</number>
   <trkseg>
   <trkpt lat="44.0566043" lon="7.5844111">

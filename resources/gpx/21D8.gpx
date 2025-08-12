@@ -19,7 +19,9 @@
     <name>Paris</name>
   </wpt>
 <trk>
-  <name>A. Blanche to Paris</name>
+  <name>Annemasse to Paris</name>
+  <bike>Tracer 900 18'</bike>
+  <year>2021</year>
   <number>1</number>
   <trkseg>
   <trkpt lat="46.1309206" lon="6.0875058">

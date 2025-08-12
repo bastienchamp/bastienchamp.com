@@ -33,7 +33,9 @@
     <desc>St Moritz, 7500, Switzerland</desc>
   </wpt>
 <trk>
-  <name>3800 Interlaken to St Moritz</name>
+  <name>Interlaken to St Moritz</name>
+  <bike>T-Max 500 11'</bike>
+  <year>2017</year>
   <number>1</number>
   <trkseg>
   <trkpt lat="46.6863481" lon="7.8632049">
