@@ -5,32 +5,13 @@
   <title>bastienchamp.com</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background: #FAFAFA;
-    }
-    #map {
-      height: calc(100vh);
-      width: 100%;
-    }
-    .bottom-bar, .top-bar, .left-bar, .right-bar {
-      position: fixed;
-      background: #FAFAFA;
-    }
-    .bottom-bar {
-      left: 0; right: 0; bottom: 0; height: 2.66vh;
-    }
-    .top-bar {
-      left: 0; right: 0; top: 0; height: 2.66vh;
-    }
-    .left-bar {
-      left: 0; top: 0; bottom: 0; width: 2.66vh;
-    }
-    .right-bar {
-      right: 0; top: 0; bottom: 0; width: 2.66vh;
-    }
+    html, body { height: 100%; margin: 0; padding: 0; background: #FAFAFA; }
+    #map { height: calc(100vh); width: 100%; }
+    .bottom-bar, .top-bar, .left-bar, .right-bar { position: fixed; background: #FAFAFA; }
+    .bottom-bar { left: 0; right: 0; bottom: 0; height: 2.66vh; }
+    .top-bar { left: 0; right: 0; top: 0; height: 2.66vh; }
+    .left-bar { left: 0; top: 0; bottom: 0; width: 2.66vh; }
+    .right-bar { right: 0; top: 0; bottom: 0; width: 2.66vh; }
   </style>
 </head>
 
@@ -81,41 +62,73 @@
         'resources/gpx/24D1.gpx',
         'resources/gpx/24D2.gpx',
         'resources/gpx/25D1.gpx',
-        'resources/gpx/25D2.gpx',
+        'resources/gpx/25D2.gpx'
       ];
+
+      const colorByPrefix = {
+        '17': '#EB3D4D', 
+        '20': '#3D55EB',
+        '21': '#EBA73D',
+        '23': '#82BEEF',
+        '24': '#968759',
+        '25': '#6B5154',
+      };
+
+      // Un seul InfoWindow réutilisé pour tous les tracés
+      const infoWindow = new google.maps.InfoWindow();
 
       gpxFiles.forEach(file => {
         fetch(file)
           .then(response => {
-            if (!response.ok) {
-              throw new Error(`Erreur HTTP : ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
             return response.text();
           })
           .then(gpxText => {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(gpxText, "application/xml");
 
+            // 1) Récupération du <name> dans <trk>
+            const trk = xmlDoc.getElementsByTagName('trk')[0];
+            const nameNode = trk ? trk.getElementsByTagName('name')[0] : null;
+            const trackName = nameNode ? nameNode.textContent.trim() : 'Trajet';
+
+            // 2) Extraction des coordonnées
             const trkpts = xmlDoc.getElementsByTagName('trkpt');
             const coords = [];
-
             for (let i = 0; i < trkpts.length; i++) {
               const lat = parseFloat(trkpts[i].getAttribute('lat'));
               const lon = parseFloat(trkpts[i].getAttribute('lon'));
               coords.push({ lat: lat, lng: lon });
             }
 
+            // 3) Couleur selon les 2 premiers chiffres du fichier
+            const match = file.match(/\/(\d{2})[^/]*\.gpx$/i);
+            const prefix = match ? match[1] : null;
+            const strokeColor = (prefix && colorByPrefix[prefix]) ? colorByPrefix[prefix] : undefined;
+
+            // 4) Création de la polyline
             const polyline = new google.maps.Polyline({
               path: coords,
               geodesic: true,
+              ...(strokeColor ? { strokeColor } : {}),
               strokeOpacity: 1.0,
               strokeWeight: 3
             });
             polyline.setMap(map);
+
+            // 5) Affichage du <name> au survol
+            polyline.addListener('mouseover', (e) => {
+              infoWindow.setContent(trackName);
+              // e.latLng donne la position de la souris sur le segment
+              infoWindow.setPosition(e.latLng);
+              infoWindow.open({ map });
+            });
+
+            polyline.addListener('mouseout', () => {
+              infoWindow.close();
+            });
           })
-          .catch(error => {
-            console.error(`Erreur lors du chargement du GPX (${file}) :`, error);
-          });
+          .catch(error => console.error(`Erreur lors du chargement du GPX (${file}) :`, error));
       });
     }
   </script>
@@ -124,5 +137,4 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-pBG0rqLOKQWGkhIjjHHoDIWbwimusJE&callback=initMap">
   </script>
 </body>
-
 </html>
