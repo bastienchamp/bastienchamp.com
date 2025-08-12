@@ -1,64 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html>
-    <head>
-        <title>bastienchamp.com</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="Bastien Champ's blog">
-        <meta name="keywords" content="bastien, champ, playground, blog, bastien champ">
-        <meta name="author" content="bastien champ">
-        <meta name="viewport" content="width=device-width, initial-scale=1.O">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/resources/css/style.css" type="text/css" media=" "screen>
-        <link rel="shortcut icon" type="image/png" href="/resources/img/favicon.png">
-    </head>
-    <header>
-        <nav>
-            <div class="logo">
-                <a href="index.html"><h1>BASTIEN CHAMP</h1></a>
-            </div>
-            <ul class="menu">
-                <li class="work"> <a href="index.html"> work </a></li>
-                <li class="about"> <a href="about.html"> about </a></li>
-            </ul> 
-        </nav>
-    </header>
-    <main>
-        <div class="title">
-            <h1>welcome to my playground</h1>
-            <div class="forkit">
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/bastienchamp/bastienchamp.com">
-                    <p>fork it 
-                        <span>&#8594;</span>
-                    </p>
-                </a>
-            </div>
-        </div>
-        <div class="projects">
-            <a href="tempconverter.html">
-                <div class="project1"></div>
-                <p class="onhover">Temperature </p>
-            </a>
-            <a href="maps.html">
-                <div class="project2"></div>
-                <p class="onhover">Maps </p>
-            </a>
-        </div>
-    </main> 
-    <footer>
-        <ul>
-            <li class="twitter">
-                <a target="_blank" rel="noopener noreferrer" href="https://x.com/monst9r">
-                    <img src="resources/img/footericon_twitter.png">
-                </a>
-            </li>
-            <li class="github">
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/bastienchamp">
-                    <img src="resources/img/footericon_github.png">
-                </a>
-            </li>
-        </ul>
-    </footer>
+<head>
+  <meta charset="utf-8">
+  <title>bastienchamp.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; background: #FAFAFA; }
+    #map { height: calc(100vh); width: 100%; }
+    .bottom-bar, .top-bar, .left-bar, .right-bar { position: fixed; background: #FAFAFA; }
+    .bottom-bar { left: 0; right: 0; bottom: 0; height: 2.66vh; }
+    .top-bar { left: 0; right: 0; top: 0; height: 2.66vh; }
+    .left-bar { left: 0; top: 0; bottom: 0; width: 2.66vh; }
+    .right-bar { right: 0; top: 0; bottom: 0; width: 2.66vh; }
+
+    /* Modale custom */
+    .custom-modal {
+      display: none;
+      position: fixed;
+      bottom: 40vh; /* Position verticale fixe */
+      left: 2.66vh; /* Alignée avec la left-bar */
+      background: white;
+      padding: 18px 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+      z-index: 9999;
+      max-width: 250px;
+      line-height: 1.35;
+    }
+    .custom-modal .title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .custom-modal .year {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .custom-modal .bike {
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div class="bottom-bar"></div>
+  <div class="top-bar"></div>
+  <div class="left-bar"></div>
+  <div class="right-bar"></div>
+
+  <!-- Modale personnalisée -->
+  <div id="trackModal" class="custom-modal"></div>
+
+  <script>
+    function initMap() {
+      const position = { lat: 45.880131, lng: 10.182550 };
+
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 7.75,
+        center: position,
+        disableDefaultUI: true,
+        keyboardShortcuts: false,
+        disableDoubleClickZoom: true,
+        draggable: false,
+        gestureHandling: "none",
+      });
+
+      const gpxFiles = [
+        'resources/gpx/17D1.gpx',
+        'resources/gpx/17D2.gpx',
+        'resources/gpx/17D3.gpx',
+        'resources/gpx/17D4.gpx',
+        'resources/gpx/17D5.gpx',
+        'resources/gpx/17D6.gpx',
+        'resources/gpx/17D7.gpx',
+        'resources/gpx/20D1.gpx',
+        'resources/gpx/20D2.gpx',
+        'resources/gpx/20D3.gpx',
+        'resources/gpx/20D4.gpx',
+        'resources/gpx/21D1.gpx',
+        'resources/gpx/21D2.gpx',
+        'resources/gpx/21D3.gpx',
+        'resources/gpx/21D4.gpx',
+        'resources/gpx/21D5.gpx',
+        'resources/gpx/21D6.gpx',
+        'resources/gpx/21D7.gpx',
+        'resources/gpx/21D8.gpx',
+        'resources/gpx/23D1.gpx',
+        'resources/gpx/23D2.gpx',
+        'resources/gpx/23D3.gpx',
+        'resources/gpx/24D1.gpx',
+        'resources/gpx/24D2.gpx',
+        'resources/gpx/25D1.gpx',
+        'resources/gpx/25D2.gpx'
+      ];
+
+      const colorByPrefix = {
+        '17': '#EB3D4D', 
+        '20': '#3D55EB',
+        '21': '#EBA73D',
+        '23': '#82BEEF',
+        '24': '#968759',
+        '25': '#6B5154',
+      };
+
+      const modal = document.getElementById('trackModal');
+
+      function esc(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      gpxFiles.forEach(file => {
+        fetch(file)
+          .then(response => {
+            if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+            return response.text();
+          })
+          .then(gpxText => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(gpxText, "application/xml");
+
+            const trk = xmlDoc.getElementsByTagName('trk')[0];
+            const nameNode = trk ? trk.getElementsByTagName('name')[0] : null;
+            const yearNode = (trk && trk.getElementsByTagName('year')[0]) || xmlDoc.getElementsByTagName('year')[0] || null;
+            const bikeNode = (trk && trk.getElementsByTagName('bike')[0]) || xmlDoc.getElementsByTagName('bike')[0] || null;
+
+            const trackName = nameNode ? nameNode.textContent.trim() : 'Trajet';
+            const year = yearNode ? yearNode.textContent.trim() : '';
+            const bike = bikeNode ? bikeNode.textContent.trim() : '';
+
+            const trkpts = xmlDoc.getElementsByTagName('trkpt');
+            const coords = [];
+            for (let i = 0; i < trkpts.length; i++) {
+              const lat = parseFloat(trkpts[i].getAttribute('lat'));
+              const lon = parseFloat(trkpts[i].getAttribute('lon'));
+              coords.push({ lat: lat, lng: lon });
+            }
+
+            const match = file.match(/\/(\d{2})[^/]*\.gpx$/i);
+            const prefix = match ? match[1] : null;
+            const strokeColor = (prefix && colorByPrefix[prefix]) ? colorByPrefix[prefix] : undefined;
+
+            const polyline = new google.maps.Polyline({
+              path: coords,
+              geodesic: true,
+              ...(strokeColor ? { strokeColor } : {}),
+              strokeOpacity: 1.0,
+              strokeWeight: 3
+            });
+            polyline.setMap(map);
+
+            polyline.addListener('mouseover', () => {
+              modal.innerHTML = `
+                <div class="title">${esc(trackName)}</div>
+                ${year ? `<div class="year">${esc(year)}</div>` : ''}
+                ${bike ? `<div class="bike">🏍️ ${esc(bike)}</div>` : ''}
+              `;
+              modal.style.display = 'block';
+            });
+
+            polyline.addListener('mouseout', () => {
+              modal.style.display = 'none';
+            });
+          })
+          .catch(error => console.error(`Erreur lors du chargement du GPX (${file}) :`, error));
+      });
+    }
+  </script>
+
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-pBG0rqLOKQWGkhIjjHHoDIWbwimusJE&callback=initMap">
+  </script>
+</body>
 </html>
