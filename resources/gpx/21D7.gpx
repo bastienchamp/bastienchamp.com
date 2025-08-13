@@ -7,7 +7,6 @@
     <!--desc>Powered by Google, ©2025 Google</desc-->
     <!--copyright author="Google Inc">
     	<year>2025</year>
-    	<link href="https://www.google.fr/maps/dir/San+Martino+di+Castrozza,+Autonomous+Province+of+Trento,+Italy/Cembra,+Autonomous+Province+of+Trento,+Italy/ibis+budget+Nangy+Annemasse,+Route+d'Annecy,+Nangy/@45.2006588,5.7453859,446319m/data=!3m1!1e3!4m20!4m19!1m5!1m1!1s0x4778592e11d4d0ab:0x47d7f35b4ff4ca5b!2m2!1d11.8005275!2d46.2617655!1m5!1m1!1s0x478278e0cb0375a7:0x834bcc1cb20c32f8!2m2!1d11.2224904!2d46.1752079!1m5!1m1!1s0x478c737ca1cbd583:0x45d8b11f144a43e9!2m2!1d6.3157568!2d46.1397908!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=85705b26-efbb-43ea-ab07-80d10860e752&amp;hl=en"></link>
     	<license>https://developers.google.com/maps/terms</license>
     </copyright-->
     <!--url>https://www.google.fr/maps/dir/San+Martino+di+Castrozza,+Autonomous+Province+of+Trento,+Italy/Cembra,+Autonomous+Province+of+Trento,+Italy/ibis+budget+Nangy+Annemasse,+Route+d'Annecy,+Nangy/@45.2006588,5.7453859,446319m/data=!3m1!1e3!4m20!4m19!1m5!1m1!1s0x4778592e11d4d0ab:0x47d7f35b4ff4ca5b!2m2!1d11.8005275!2d46.2617655!1m5!1m1!1s0x478278e0cb0375a7:0x834bcc1cb20c32f8!2m2!1d11.2224904!2d46.1752079!1m5!1m1!1s0x478c737ca1cbd583:0x45d8b11f144a43e9!2m2!1d6.3157568!2d46.1397908!3e0?entry=tts&g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&skid=85705b26-efbb-43ea-ab07-80d10860e752&hl=en</url-->
@@ -29,6 +28,7 @@
   <name>San Martino di Castrozza ➡️ Annemasse</name>
   <bike>Tracer 900 18'</bike>
   <year>2021</year>
+  <link href="https://www.google.fr/maps/dir/San+Martino+di+Castrozza,+Autonomous+Province+of+Trento,+Italy/Cembra,+Autonomous+Province+of+Trento,+Italy/ibis+budget+Nangy+Annemasse,+Route+d'Annecy,+Nangy/@45.2006588,5.7453859,446319m/data=!3m1!1e3!4m20!4m19!1m5!1m1!1s0x4778592e11d4d0ab:0x47d7f35b4ff4ca5b!2m2!1d11.8005275!2d46.2617655!1m5!1m1!1s0x478278e0cb0375a7:0x834bcc1cb20c32f8!2m2!1d11.2224904!2d46.1752079!1m5!1m1!1s0x478c737ca1cbd583:0x45d8b11f144a43e9!2m2!1d6.3157568!2d46.1397908!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=85705b26-efbb-43ea-ab07-80d10860e752&amp;hl=en"></link>
   <number>1</number>
   <trkseg>
   <trkpt lat="46.2617629" lon="11.800521">

@@ -7,7 +7,6 @@
     <!--desc>Powered by Google, ©2025 Google</desc-->
     <!--copyright author="Google Inc">
     	<year>2025</year>
-    	<link href="https://www.google.com/maps/dir/Saint-Dalmas+de+Tende,+06430+Tende/Cuneo,+Province+of+Cuneo,+Italy/ISOLA+2000,+Isola/@44.1350738,6.9949399,11z/data=!3m1!5s0x12cd0096e2c6ca8b:0x96ea40ce7bb0ebe1!4m20!4m19!1m5!1m1!1s0x12cd9b6b8ef0d52b:0xf18bcccd3553e3d2!2m2!1d7.584804!2d44.056228!1m5!1m1!1s0x12cd6938c78138a7:0x135d6bcb1726e647!2m2!1d7.5426711!2d44.3844766!1m5!1m1!1s0x12cd009231f701b5:0x66b6e5e5bbf251c2!2m2!1d7.1602285!2d44.1850371!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=99b3698c-6831-43ec-a241-1adfe39bb8be&amp;hl=en"></link>
     	<license>https://developers.google.com/maps/terms</license>
     </copyright-->
     <!--url>https://www.google.com/maps/dir/Saint-Dalmas+de+Tende,+06430+Tende/Cuneo,+Province+of+Cuneo,+Italy/ISOLA+2000,+Isola/@44.1350738,6.9949399,11z/data=!3m1!5s0x12cd0096e2c6ca8b:0x96ea40ce7bb0ebe1!4m20!4m19!1m5!1m1!1s0x12cd9b6b8ef0d52b:0xf18bcccd3553e3d2!2m2!1d7.584804!2d44.056228!1m5!1m1!1s0x12cd6938c78138a7:0x135d6bcb1726e647!2m2!1d7.5426711!2d44.3844766!1m5!1m1!1s0x12cd009231f701b5:0x66b6e5e5bbf251c2!2m2!1d7.1602285!2d44.1850371!3e0?entry=tts&g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&skid=99b3698c-6831-43ec-a241-1adfe39bb8be&hl=en</url-->
@@ -29,6 +28,7 @@
   <name>Saint-Dalmas de Tende ➡️ Isola 2000</name>
   <bike>XTZ 750 Super Tenere 93'</bike>
   <year>2023</year>
+  <link href="https://www.google.com/maps/dir/Saint-Dalmas+de+Tende,+06430+Tende/Cuneo,+Province+of+Cuneo,+Italy/ISOLA+2000,+Isola/@44.1350738,6.9949399,11z/data=!3m1!5s0x12cd0096e2c6ca8b:0x96ea40ce7bb0ebe1!4m20!4m19!1m5!1m1!1s0x12cd9b6b8ef0d52b:0xf18bcccd3553e3d2!2m2!1d7.584804!2d44.056228!1m5!1m1!1s0x12cd6938c78138a7:0x135d6bcb1726e647!2m2!1d7.5426711!2d44.3844766!1m5!1m1!1s0x12cd009231f701b5:0x66b6e5e5bbf251c2!2m2!1d7.1602285!2d44.1850371!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=99b3698c-6831-43ec-a241-1adfe39bb8be&amp;hl=en"></link>
   <number>1</number>
   <trkseg>
   <trkpt lat="44.0566043" lon="7.5844111">

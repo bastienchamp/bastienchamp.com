@@ -15,12 +15,11 @@
 
     /* Modale fixe — en bas à gauche (clic) */
     .custom-modal {
-      display: none;
       position: fixed;
       bottom: 6vh;
       left: 6vh;
       background: white;
-      padding: 18px 24px 48px 24px; /* espace pour le bouton */
+      padding: 18px 24px; /* plus de bouton bas → padding normal */
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       font-size: 15px;
       border-radius: 8px;
@@ -29,18 +28,51 @@
       max-width: 260px;
       line-height: 1.35;
       text-align: left;
+
+      /* Fade-in / out */
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(6px);
+      transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s, border-color .18s ease;
+
+      border: 2px solid transparent; /* mis à jour dynamiquement avec la couleur du trajet */
     }
+    .custom-modal.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: opacity .18s ease, transform .18s ease, visibility 0s;
+    }
+
+    /* Ligne du header (year + croix) */
+    .custom-modal .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
     .custom-modal .title { font-weight: 600; margin-bottom: 6px; }
-    .custom-modal .year { font-size: 14px; margin-bottom: 4px; }
-    .custom-modal .bike { font-size: 14px; margin-bottom: 6px; }
+    .custom-modal .year { font-size: 14px; }
+    .custom-modal .bike { font-size: 14px; margin-top: 4px; margin-bottom: 6px; }
     .custom-modal .link { font-size: 13px; color: #0066cc; word-break: break-all; }
-    .custom-modal .close-btn {
-      position: absolute; right: 10px; bottom: 10px;
-      padding: 6px 10px; font-size: 13px;
-      border: 1px solid #ddd; border-radius: 6px;
-      background: #f4f4f4; cursor: pointer;
+
+    /* Croix de fermeture en haut-droite (alignée avec year) */
+    .custom-modal .close-x {
+      width: 24px; height: 24px;
+      line-height: 24px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 18px;
+      color: #666;
+      padding: 0;
     }
-    .custom-modal .close-btn:hover { background: #ececec; }
+    .custom-modal .close-x:hover { color: #111; }
 
     /* Tooltip (hover) — près du curseur, sans bike ni link */
     .hover-modal {
@@ -129,19 +161,42 @@
         `;
       }
 
-      function showFixedModal(data) {
-        modal.innerHTML = renderContent({ ...data, includeLink: true, includeBike: true })
-          + `<button class="close-btn" type="button">Fermer</button>`;
-        modal.style.display = 'block';
-        modal.querySelector('.close-btn').onclick = () => {
-          modal.style.display = 'none';
-          if (lockedPolyline && lockedShadow) applyBaseStyle(lockedPolyline, lockedShadow);
-          lockedPolyline = null; lockedShadow = null;
+      // === CHANGÉ : croix en haut, fade-in/out, bordure couleur trajet ===
+      function showFixedModal(data, borderColor) {
+        modal.innerHTML = `
+          <div class="modal-header">
+            ${data.year ? `<div class="year">${esc(data.year)}</div>` : `<div class="year"></div>`}
+            <button class="close-x" type="button" aria-label="Fermer">×</button>
+          </div>
+          <div class="title">${esc(data.trackName)}</div>
+          ${data.bike ? `<div class="bike">🏍️ ${esc(data.bike)}</div>` : ''}
+          ${data.linkHref ? `<div class="link"><a href="${esc(data.linkHref)}" target="_blank">Voir l’itinéraire</a></div>` : ''}
+        `;
+        modal.style.borderColor = borderColor || '#cccccc';
+        modal.classList.add('is-visible');
+
+        const closeBtn = modal.querySelector('.close-x');
+        closeBtn.onclick = (ev) => {
+          ev.stopPropagation();
+          closeFixedModal();
         };
       }
 
+      function closeFixedModal() {
+        modal.classList.remove('is-visible');
+        // Restaure le style si une ligne est lockée
+        if (lockedPolyline && lockedShadow) {
+          applyBaseStyle(lockedPolyline, lockedShadow);
+        }
+        lockedPolyline = null; lockedShadow = null;
+      }
+
       function showHoverModalAt(data, x, y) {
-        hoverModal.innerHTML = renderContent({ ...data, includeLink: false, includeBike: false }); // <- pas de bike au hover
+        // Tooltip hover : pas de bike, pas de link
+        hoverModal.innerHTML = `
+          ${data.year ? `<div class="year">${esc(data.year)}</div>` : ''}
+          <div class="title">${esc(data.trackName)}</div>
+        `;
         const offset = 12;
         hoverModal.style.left = (x + offset) + 'px';
         hoverModal.style.top  = (y + offset) + 'px';
@@ -230,11 +285,11 @@
             if (lockedPolyline !== polyline) applyBaseStyle(polyline, shadowPolyline);
           });
 
-          // Clic (modale fixe + lock)
+          // Clic (modale fixe + lock) — bordure = couleur du trajet
           polyline.addListener('click', () => {
             if (lockedPolyline && lockedPolyline !== polyline) applyBaseStyle(lockedPolyline, lockedShadow);
             lockedPolyline = polyline; lockedShadow = shadowPolyline;
-            showFixedModal(data);
+            showFixedModal(data, strokeColor || '#cccccc');
             applyHoverStyle(polyline, shadowPolyline);
           });
 

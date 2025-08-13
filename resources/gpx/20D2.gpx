@@ -7,7 +7,6 @@
     <!--desc>Powered by Google, ©2025 Google</desc-->
     <!--copyright author="Google Inc">
     	<year>2025</year>
-    	<link href="https://www.google.fr/maps/dir/Verbier,+Val+de+Bagnes,+Switzerland/Colle+di+Gran+San+Bernardo,+Saint-Rh%C3%A9my-en-Bosses,+Aosta+Valley,+Italy/Aoste,+Aosta+Valley,+Italy/Sainte-Foy-Tarentaise/Val-d'Is%C3%A8re/@45.7726056,6.7536952,10z/data=!3m1!4b1!4m32!4m31!1m5!1m1!1s0x478ecfcef7a6a973:0xffde3e9c0d278891!2m2!1d7.2285512!2d46.0960814!1m5!1m1!1s0x478931b376c147ed:0x6f1c690243c688ec!2m2!1d7.159489!2d45.872523!1m5!1m1!1s0x478920b73eb6afb7:0x6749e443ee2610!2m2!1d7.3130948!2d45.7350508!1m5!1m1!1s0x47896d27fbd0722b:0x408ab2ae4baac70!2m2!1d6.8827373!2d45.590997!1m5!1m1!1s0x47890909fd5ffb93:0x408ab2ae4baa830!2m2!1d6.9797273!2d45.4490691!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=699fb50b-d3db-410b-81e7-3bbd88f35ca9&amp;hl=en"></link>
     	<license>https://developers.google.com/maps/terms</license>
     </copyright-->
     <!--url>https://www.google.fr/maps/dir/Verbier,+Val+de+Bagnes,+Switzerland/Colle+di+Gran+San+Bernardo,+Saint-Rh%C3%A9my-en-Bosses,+Aosta+Valley,+Italy/Aoste,+Aosta+Valley,+Italy/Sainte-Foy-Tarentaise/Val-d'Is%C3%A8re/@45.7726056,6.7536952,10z/data=!3m1!4b1!4m32!4m31!1m5!1m1!1s0x478ecfcef7a6a973:0xffde3e9c0d278891!2m2!1d7.2285512!2d46.0960814!1m5!1m1!1s0x478931b376c147ed:0x6f1c690243c688ec!2m2!1d7.159489!2d45.872523!1m5!1m1!1s0x478920b73eb6afb7:0x6749e443ee2610!2m2!1d7.3130948!2d45.7350508!1m5!1m1!1s0x47896d27fbd0722b:0x408ab2ae4baac70!2m2!1d6.8827373!2d45.590997!1m5!1m1!1s0x47890909fd5ffb93:0x408ab2ae4baa830!2m2!1d6.9797273!2d45.4490691!3e0?entry=tts&g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&skid=699fb50b-d3db-410b-81e7-3bbd88f35ca9&hl=en</url-->
@@ -37,6 +36,7 @@
   <name>Verbier ➡️ Val-d&apos;Isère</name>
     <bike>T-Max 500 04'</bike>
     <year>2020</year>
+    <link href="https://www.google.fr/maps/dir/Verbier,+Val+de+Bagnes,+Switzerland/Colle+di+Gran+San+Bernardo,+Saint-Rh%C3%A9my-en-Bosses,+Aosta+Valley,+Italy/Aoste,+Aosta+Valley,+Italy/Sainte-Foy-Tarentaise/Val-d'Is%C3%A8re/@45.7726056,6.7536952,10z/data=!3m1!4b1!4m32!4m31!1m5!1m1!1s0x478ecfcef7a6a973:0xffde3e9c0d278891!2m2!1d7.2285512!2d46.0960814!1m5!1m1!1s0x478931b376c147ed:0x6f1c690243c688ec!2m2!1d7.159489!2d45.872523!1m5!1m1!1s0x478920b73eb6afb7:0x6749e443ee2610!2m2!1d7.3130948!2d45.7350508!1m5!1m1!1s0x47896d27fbd0722b:0x408ab2ae4baac70!2m2!1d6.8827373!2d45.590997!1m5!1m1!1s0x47890909fd5ffb93:0x408ab2ae4baa830!2m2!1d6.9797273!2d45.4490691!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=699fb50b-d3db-410b-81e7-3bbd88f35ca9&amp;hl=en"></link>
   <number>1</number>
   <trkseg>
   <trkpt lat="46.096079" lon="7.2285452">
