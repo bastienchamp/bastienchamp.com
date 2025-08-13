@@ -7,11 +7,11 @@
   <style>
     html, body { height: 100%; margin: 0; padding: 0; background: #FAFAFA; }
     #map { height: calc(100vh); width: 100%; }
-    .bottom-bar, .top-bar, .left-bar, .right-bar { position: fixed; background: #FAFAFA; }
-    .bottom-bar { left: 0; right: 0; bottom: 0; height: 2.66vh; }
-    .top-bar { left: 0; right: 0; top: 0; height: 2.66vh; }
-    .left-bar { left: 0; top: 0; bottom: 0; width: 2.66vh; }
-    .right-bar { right: 0; top: 0; bottom: 0; width: 2.66vh; }
+    .bottom-bar, .top-bar, .left-bar, .right-bar { position: fixed; background: #FFFFFF; }
+    .bottom-bar { left: 0; right: 0; bottom: 0; height: 2.25vh; }
+    .top-bar { left: 0; right: 0; top: 0; height: 2.25vh; }
+    .left-bar { left: 0; top: 0; bottom: 0; width: 2.25vh; }
+    .right-bar { right: 0; top: 0; bottom: 0; width: 2.25vh; }
 
     /* Modale fixe — en bas à gauche (clic) */
     .custom-modal {
@@ -112,13 +112,13 @@
       const position = { lat: 45.880131, lng: 10.182550 };
 
       const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 7.75,
+        zoom: 7.70,
         center: position,
         disableDefaultUI: true,
+        zoomControl: true, 
         keyboardShortcuts: false,
-        disableDoubleClickZoom: true,
-        draggable: false,
-        gestureHandling: "none",
+        gestureHandling: "greedy",
+        minZoom: 6 
       });
 
       const gpxFiles = [
@@ -142,9 +142,9 @@
 
       // Styles
       const baseMain = { weight: 3,  opacity: 1.0 };
-      const hoverMain= { weight: 6,  opacity: 1.0 };
-      const baseShad = { weight: 7,  opacity: 0.35 };
-      const hoverShad= { weight: 11, opacity: 0.6  };
+      const hoverMain= { weight: 4.5,  opacity: 1.0 };
+      const baseShad = { weight: 5,  opacity: 0.35 };
+      const hoverShad= { weight: 7, opacity: 0.6 };
 
       // Debounce
       let hoverTimer = null;
