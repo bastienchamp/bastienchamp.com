@@ -7,6 +7,7 @@
     <!--desc>Powered by Google, ©2025 Google</desc-->
     <!--copyright author="Google Inc">
     	<year>2025</year>
+    	<link href="https://www.google.com/maps/dir/Saint-V%C3%A9ran/Saint-Paul-sur-Ubaye,+04530,+France/Saint-%C3%89tienne-de-Tin%C3%A9e,+06660,+France/Beuil,+06470,+France/Puget-Th%C3%A9niers,+06260,+France/Saint-Vallier-de-Thiey,+06460,+France/Saint-C%C3%A9zaire-sur-Siagne,+06530,+France/785+D563,+83440+Mons,+France/945+Chem.+de+Prebarjaud/@44.3887256,6.348355,9z/data=!4m56!4m55!1m5!1m1!1s0x12ccce4c3b4d9693:0x40819a5fd97a1a0!2m2!1d6.868571!2d44.700836!1m5!1m1!1s0x12ccc009b2ee1197:0x5ce5c8ef4423c753!2m2!1d6.751375!2d44.514744!1m5!1m1!1s0x12ccf9fc16d20bd9:0x40819a5fd979870!2m2!1d6.925003!2d44.258015!1m5!1m1!1s0x12cc51470353eef5:0xfaa4e88c71f5b06f!2m2!1d6.990253!2d44.0942239!1m5!1m1!1s0x12cc460d60f731c9:0x29a9c089e1c44c41!2m2!1d6.895835!2d43.956303!1m5!1m1!1s0x12cc246188699adf:0xcacbc4f29b86692f!2m2!1d6.8483761!2d43.6993253!1m5!1m1!1s0x12cc2164945c9c97:0x40819a5fd979890!2m2!1d6.7978657!2d43.6514054!1m5!1m1!1s0x12cc18dfcd923045:0xd0ff577e1164dbe0!2m2!1d6.7090258!2d43.6891078!1m5!1m1!1s0x12cc1e80bca86aa3:0xc0fd9b1b689c83de!2m2!1d6.66815!2d43.6354683!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=861deb8b-785b-4764-9b82-4d27431553b7&amp;hl=en"></link>
     	<license>https://developers.google.com/maps/terms</license>
     </copyright-->
     <!--url>https://www.google.com/maps/dir/Saint-V%C3%A9ran/Saint-Paul-sur-Ubaye,+04530,+France/Saint-%C3%89tienne-de-Tin%C3%A9e,+06660,+France/Beuil,+06470,+France/Puget-Th%C3%A9niers,+06260,+France/Saint-Vallier-de-Thiey,+06460,+France/Saint-C%C3%A9zaire-sur-Siagne,+06530,+France/785+D563,+83440+Mons,+France/945+Chem.+de+Prebarjaud/@44.3887256,6.348355,9z/data=!4m56!4m55!1m5!1m1!1s0x12ccce4c3b4d9693:0x40819a5fd97a1a0!2m2!1d6.868571!2d44.700836!1m5!1m1!1s0x12ccc009b2ee1197:0x5ce5c8ef4423c753!2m2!1d6.751375!2d44.514744!1m5!1m1!1s0x12ccf9fc16d20bd9:0x40819a5fd979870!2m2!1d6.925003!2d44.258015!1m5!1m1!1s0x12cc51470353eef5:0xfaa4e88c71f5b06f!2m2!1d6.990253!2d44.0942239!1m5!1m1!1s0x12cc460d60f731c9:0x29a9c089e1c44c41!2m2!1d6.895835!2d43.956303!1m5!1m1!1s0x12cc246188699adf:0xcacbc4f29b86692f!2m2!1d6.8483761!2d43.6993253!1m5!1m1!1s0x12cc2164945c9c97:0x40819a5fd979890!2m2!1d6.7978657!2d43.6514054!1m5!1m1!1s0x12cc18dfcd923045:0xd0ff577e1164dbe0!2m2!1d6.7090258!2d43.6891078!1m5!1m1!1s0x12cc1e80bca86aa3:0xc0fd9b1b689c83de!2m2!1d6.66815!2d43.6354683!3e0?entry=tts&g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&skid=861deb8b-785b-4764-9b82-4d27431553b7&hl=en</url-->
@@ -49,7 +50,7 @@
     <desc>945 Chem. de Prebarjaud, 83440 Fayence, France</desc>
   </wpt>
 <trk>
-  <name>Saint-Véran to Fayence</name>
+  <name>Saint-Véran ➡️ Fayence</name>
   <bike>Multistrada 950 17'</bike>
   <year>2024</year>
   <number>1</number>

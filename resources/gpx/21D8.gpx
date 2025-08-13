@@ -7,6 +7,7 @@
     <!--desc>Powered by Google, ©2025 Google</desc-->
     <!--copyright author="Google Inc">
     	<year>2025</year>
+    	<link href="https://www.google.fr/maps/dir/A.+Blanche,+74160+Saint-Julien-en-Genevois/Paris/@47.4550402,2.8779042,428294m/data=!3m2!1e3!4b1!4m14!4m13!1m5!1m1!1s0x478c7bfbcb01103d:0x1e467705ebb3fd31!2m2!1d6.0875058!2d46.1309206!1m5!1m1!1s0x47e66e1f06e2b70f:0x40b82c3688c9460!2m2!1d2.3513765!2d48.8575475!3e0?entry=tts&amp;g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&amp;skid=fcc75c9c-1d87-4e61-90d7-f252537438d2&amp;hl=en"></link>
     	<license>https://developers.google.com/maps/terms</license>
     </copyright-->
     <!--url>https://www.google.fr/maps/dir/A.+Blanche,+74160+Saint-Julien-en-Genevois/Paris/@47.4550402,2.8779042,428294m/data=!3m2!1e3!4b1!4m14!4m13!1m5!1m1!1s0x478c7bfbcb01103d:0x1e467705ebb3fd31!2m2!1d6.0875058!2d46.1309206!1m5!1m1!1s0x47e66e1f06e2b70f:0x40b82c3688c9460!2m2!1d2.3513765!2d48.8575475!3e0?entry=tts&g_ep=EgoyMDI1MDgxMC4wIPu8ASoASAFQAw%3D%3D&skid=fcc75c9c-1d87-4e61-90d7-f252537438d2&hl=en</url-->
@@ -19,7 +20,7 @@
     <name>Paris</name>
   </wpt>
 <trk>
-  <name>Annemasse to Paris</name>
+  <name>Annemasse ➡️ Paris</name>
   <bike>Tracer 900 18'</bike>
   <year>2021</year>
   <number>1</number>

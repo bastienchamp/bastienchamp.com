@@ -13,37 +13,53 @@
     .left-bar { left: 0; top: 0; bottom: 0; width: 2.66vh; }
     .right-bar { right: 0; top: 0; bottom: 0; width: 2.66vh; }
 
-    /* Modale custom — toujours en bas à gauche, 40vh du bord du bas */
+    /* Modale fixe — en bas à gauche (clic) */
     .custom-modal {
       display: none;
       position: fixed;
-      bottom: 40vh;      /* distance fixe depuis le bas de l’écran */
-      left: 2.66vh;      /* alignée avec la left-bar */
-      top: auto;         /* reset pour éviter le centrage précédent */
-      right: auto;       /* reset */
-      transform: none;   /* reset */
+      bottom: 6vh;
+      left: 6vh;
       background: white;
-      padding: 18px 24px;
+      padding: 18px 24px 48px 24px; /* espace pour le bouton */
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       font-size: 15px;
       border-radius: 8px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       z-index: 9999;
-      max-width: 250px;
+      max-width: 260px;
       line-height: 1.35;
       text-align: left;
     }
-    .custom-modal .title {
-      font-weight: 600;
-      margin-bottom: 6px;
+    .custom-modal .title { font-weight: 600; margin-bottom: 6px; }
+    .custom-modal .year { font-size: 14px; margin-bottom: 4px; }
+    .custom-modal .bike { font-size: 14px; margin-bottom: 6px; }
+    .custom-modal .link { font-size: 13px; color: #0066cc; word-break: break-all; }
+    .custom-modal .close-btn {
+      position: absolute; right: 10px; bottom: 10px;
+      padding: 6px 10px; font-size: 13px;
+      border: 1px solid #ddd; border-radius: 6px;
+      background: #f4f4f4; cursor: pointer;
     }
-    .custom-modal .year {
-      font-size: 14px;
-      margin-bottom: 4px;
+    .custom-modal .close-btn:hover { background: #ececec; }
+
+    /* Tooltip (hover) — près du curseur, sans bike ni link */
+    .hover-modal {
+      display: none;
+      position: fixed;
+      background: white;
+      padding: 10px 12px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 13.5px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 10000;
+      max-width: 260px;
+      line-height: 1.35;
+      text-align: left;
+      pointer-events: none;
     }
-    .custom-modal .bike {
-      font-size: 14px;
-    }
+    .hover-modal .title { font-weight: 600; margin-top: 2px; }
+    .hover-modal .year { opacity: 0.9; }
   </style>
 </head>
 
@@ -54,8 +70,10 @@
   <div class="left-bar"></div>
   <div class="right-bar"></div>
 
-  <!-- Modale personnalisée -->
+  <!-- Modale fixe (clic) -->
   <div id="trackModal" class="custom-modal"></div>
+  <!-- Tooltip (hover) -->
+  <div id="hoverModal" class="hover-modal"></div>
 
   <script>
     function initMap() {
@@ -72,114 +90,159 @@
       });
 
       const gpxFiles = [
-        'resources/gpx/17D1.gpx',
-        'resources/gpx/17D2.gpx',
-        'resources/gpx/17D3.gpx',
-        'resources/gpx/17D4.gpx',
-        'resources/gpx/17D5.gpx',
-        'resources/gpx/17D6.gpx',
-        'resources/gpx/17D7.gpx',
-        'resources/gpx/20D1.gpx',
-        'resources/gpx/20D2.gpx',
-        'resources/gpx/20D3.gpx',
-        'resources/gpx/20D4.gpx',
-        'resources/gpx/21D1.gpx',
-        'resources/gpx/21D2.gpx',
-        'resources/gpx/21D3.gpx',
-        'resources/gpx/21D4.gpx',
-        'resources/gpx/21D5.gpx',
-        'resources/gpx/21D6.gpx',
-        'resources/gpx/21D7.gpx',
-        'resources/gpx/21D8.gpx',
-        'resources/gpx/23D1.gpx',
-        'resources/gpx/23D2.gpx',
-        'resources/gpx/23D3.gpx',
-        'resources/gpx/24D1.gpx',
-        'resources/gpx/24D2.gpx',
-        'resources/gpx/25D1.gpx',
-        'resources/gpx/25D2.gpx'
+        'resources/gpx/17D1.gpx','resources/gpx/17D2.gpx','resources/gpx/17D3.gpx','resources/gpx/17D4.gpx','resources/gpx/17D5.gpx','resources/gpx/17D6.gpx','resources/gpx/17D7.gpx',
+        'resources/gpx/20D1.gpx','resources/gpx/20D2.gpx','resources/gpx/20D3.gpx','resources/gpx/20D4.gpx',
+        'resources/gpx/21D1.gpx','resources/gpx/21D2.gpx','resources/gpx/21D3.gpx','resources/gpx/21D4.gpx','resources/gpx/21D5.gpx','resources/gpx/21D6.gpx','resources/gpx/21D7.gpx','resources/gpx/21D8.gpx',
+        'resources/gpx/23D1.gpx','resources/gpx/23D2.gpx','resources/gpx/23D3.gpx',
+        'resources/gpx/24D1.gpx','resources/gpx/24D2.gpx',
+        'resources/gpx/25D1.gpx','resources/gpx/25D2.gpx'
       ];
 
       const colorByPrefix = {
-        '17': '#EB3D4D', 
-        '20': '#3D55EB',
-        '21': '#EBA73D',
-        '23': '#82BEEF',
-        '24': '#968759',
-        '25': '#6B5154',
+        '17': '#EB3D4D', '20': '#3D55EB', '21': '#EBA73D', '23': '#82BEEF', '24': '#968759', '25': '#6B5154',
       };
 
       const modal = document.getElementById('trackModal');
+      const hoverModal = document.getElementById('hoverModal');
 
-      function esc(str) {
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#39;');
+      // État de lock (modale fixe)
+      let lockedPolyline = null, lockedShadow = null;
+
+      // Styles
+      const baseMain = { weight: 3,  opacity: 1.0 };
+      const hoverMain= { weight: 6,  opacity: 1.0 };
+      const baseShad = { weight: 7,  opacity: 0.35 };
+      const hoverShad= { weight: 11, opacity: 0.6  };
+
+      // Debounce
+      let hoverTimer = null;
+      const HOVER_DELAY = 80;
+
+      const esc = (s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+
+      function renderContent({ year, trackName, bike, linkHref, includeLink, includeBike }) {
+        return `
+          ${year ? `<div class="year">${esc(year)}</div>` : ''}
+          <div class="title">${esc(trackName)}</div>
+          ${includeBike && bike ? `<div class="bike">🏍️ ${esc(bike)}</div>` : ''}
+          ${includeLink && linkHref ? `<div class="link"><a href="${esc(linkHref)}" target="_blank">Voir l’itinéraire</a></div>` : ''}
+        `;
+      }
+
+      function showFixedModal(data) {
+        modal.innerHTML = renderContent({ ...data, includeLink: true, includeBike: true })
+          + `<button class="close-btn" type="button">Fermer</button>`;
+        modal.style.display = 'block';
+        modal.querySelector('.close-btn').onclick = () => {
+          modal.style.display = 'none';
+          if (lockedPolyline && lockedShadow) applyBaseStyle(lockedPolyline, lockedShadow);
+          lockedPolyline = null; lockedShadow = null;
+        };
+      }
+
+      function showHoverModalAt(data, x, y) {
+        hoverModal.innerHTML = renderContent({ ...data, includeLink: false, includeBike: false }); // <- pas de bike au hover
+        const offset = 12;
+        hoverModal.style.left = (x + offset) + 'px';
+        hoverModal.style.top  = (y + offset) + 'px';
+        hoverModal.style.display = 'block';
+      }
+      function debouncedHover(data, x, y) {
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => showHoverModalAt(data, x, y), HOVER_DELAY);
+      }
+      function hideHoverModal() { clearTimeout(hoverTimer); hoverModal.style.display = 'none'; }
+
+      function applyHoverStyle(poly, shad) {
+        poly.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
+        shad.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
+      }
+      function applyBaseStyle(poly, shad) {
+        poly.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
+        shad.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
       }
 
       gpxFiles.forEach(file => {
-        fetch(file)
-          .then(response => {
-            if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-            return response.text();
-          })
-          .then(gpxText => {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(gpxText, "application/xml");
+        fetch(file).then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text();
+        }).then(gpxText => {
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(gpxText, "application/xml");
 
-            const trk = xmlDoc.getElementsByTagName('trk')[0];
-            const nameNode = trk ? trk.getElementsByTagName('name')[0] : null;
-            const yearNode = (trk && trk.getElementsByTagName('year')[0]) || xmlDoc.getElementsByTagName('year')[0] || null;
-            const bikeNode = (trk && trk.getElementsByTagName('bike')[0]) || xmlDoc.getElementsByTagName('bike')[0] || null;
+          const trk = xmlDoc.getElementsByTagName('trk')[0];
+          const nameNode = trk ? trk.getElementsByTagName('name')[0] : null;
+          const yearNode = trk ? trk.getElementsByTagName('year')[0] : null;
+          const bikeNode = trk ? trk.getElementsByTagName('bike')[0] : null;
+          const linkNode = trk ? trk.getElementsByTagName('link')[0] : null;
 
-            const trackName = nameNode ? nameNode.textContent.trim() : 'Trajet';
-            const year = yearNode ? yearNode.textContent.trim() : '';
-            const bike = bikeNode ? bikeNode.textContent.trim() : '';
+          const trackName = nameNode ? nameNode.textContent.trim() : 'Trajet';
+          const year = yearNode ? yearNode.textContent.trim() : '';
+          const bike = bikeNode ? bikeNode.textContent.trim() : '';
+          const linkHref = linkNode ? linkNode.getAttribute('href') : '';
 
-            const trkpts = xmlDoc.getElementsByTagName('trkpt');
-            const coords = [];
-            for (let i = 0; i < trkpts.length; i++) {
-              const lat = parseFloat(trkpts[i].getAttribute('lat'));
-              const lon = parseFloat(trkpts[i].getAttribute('lon'));
-              coords.push({ lat: lat, lng: lon });
+          const trkpts = xmlDoc.getElementsByTagName('trkpt');
+          const coords = [];
+          for (let i = 0; i < trkpts.length; i++) {
+            const lat = parseFloat(trkpts[i].getAttribute('lat'));
+            const lon = parseFloat(trkpts[i].getAttribute('lon'));
+            coords.push({ lat, lng: lon });
+          }
+
+          const match = file.match(/\/(\d{2})[^/]*\.gpx$/i);
+          const prefix = match ? match[1] : null;
+          const strokeColor = (prefix && colorByPrefix[prefix]) ? colorByPrefix[prefix] : undefined;
+
+          // Ombre
+          const shadowPolyline = new google.maps.Polyline({
+            path: coords, geodesic: true,
+            strokeColor: "#000000", strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight, zIndex: 1
+          });
+          shadowPolyline.setMap(map);
+
+          // Ligne
+          const polyline = new google.maps.Polyline({
+            path: coords, geodesic: true,
+            ...(strokeColor ? { strokeColor } : {}),
+            strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight, zIndex: 2
+          });
+          polyline.setMap(map);
+
+          const data = { year, trackName, bike, linkHref };
+
+          // Hover
+          polyline.addListener('mouseover', (e) => {
+            if (lockedPolyline && lockedPolyline !== polyline) {
+              applyBaseStyle(lockedPolyline, lockedShadow);
+              lockedPolyline = null; lockedShadow = null;
             }
+            const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
+            const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
+            debouncedHover(data, x, y);
+            applyHoverStyle(polyline, shadowPolyline);
+          });
+          polyline.addListener('mousemove', (e) => {
+            const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
+            const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
+            debouncedHover(data, x, y);
+          });
+          polyline.addListener('mouseout', () => {
+            hideHoverModal();
+            if (lockedPolyline !== polyline) applyBaseStyle(polyline, shadowPolyline);
+          });
 
-            const match = file.match(/\/(\d{2})[^/]*\.gpx$/i);
-            const prefix = match ? match[1] : null;
-            const strokeColor = (prefix && colorByPrefix[prefix]) ? colorByPrefix[prefix] : undefined;
+          // Clic (modale fixe + lock)
+          polyline.addListener('click', () => {
+            if (lockedPolyline && lockedPolyline !== polyline) applyBaseStyle(lockedPolyline, lockedShadow);
+            lockedPolyline = polyline; lockedShadow = shadowPolyline;
+            showFixedModal(data);
+            applyHoverStyle(polyline, shadowPolyline);
+          });
 
-            const polyline = new google.maps.Polyline({
-              path: coords,
-              geodesic: true,
-              ...(strokeColor ? { strokeColor } : {}),
-              strokeOpacity: 1.0,
-              strokeWeight: 3
-            });
-            polyline.setMap(map);
-
-            polyline.addListener('mouseover', () => {
-              modal.innerHTML = `
-                <div class="title">${esc(trackName)}</div>
-                ${year ? `<div class="year">${esc(year)}</div>` : ''}
-                ${bike ? `<div class="bike">🏍️ ${esc(bike)}</div>` : ''}
-              `;
-              modal.style.display = 'block';
-            });
-
-            polyline.addListener('mouseout', () => {
-              modal.style.display = 'none';
-            });
-          })
-          .catch(error => console.error(`Erreur lors du chargement du GPX (${file}) :`, error));
+        }).catch(err => console.error(`Erreur GPX (${file}):`, err));
       });
     }
   </script>
 
-  <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-pBG0rqLOKQWGkhIjjHHoDIWbwimusJE&callback=initMap">
-  </script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-pBG0rqLOKQWGkhIjjHHoDIWbwimusJE&callback=initMap"></script>
 </body>
 </html>
