@@ -1,0 +1,2264 @@
+{
+  "metadata": {
+    "title": "European Road Passes ≥1000 m (v1.3b, Alps & Pyrenees prioritized)",
+    "generated_at": "2025-08-13",
+    "scope": "Geographic Europe. Road-accessible mountain passes only.",
+    "notes": [
+      "Coordinates WGS84 (lat, lon). 'countries' lists ISO3 codes (multiple for border passes).",
+      "Best-effort & deduplicated; can be extended further on request."
+    ],
+    "schema": {
+      "pass": {
+        "id": "slug",
+        "name": "string",
+        "elevation_m": "int",
+        "coordinates": {
+          "lat": "float",
+          "lon": "float"
+        },
+        "countries": [
+          "ISO3"
+        ]
+      },
+      "by_country": {
+        "ISO3": [
+          "pass.id"
+        ]
+      }
+    }
+  },
+  "passes": [
+    {
+      "id": "iseran",
+      "name": "Col de l'Iseran",
+      "elevation_m": 2764,
+      "coordinates": {
+        "lat": 45.418,
+        "lon": 7.034
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "stelvio",
+      "name": "Passo dello Stelvio",
+      "elevation_m": 2757,
+      "coordinates": {
+        "lat": 46.528,
+        "lon": 10.452
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "agnel",
+      "name": "Col Agnel",
+      "elevation_m": 2744,
+      "coordinates": {
+        "lat": 44.689,
+        "lon": 7.053
+      },
+      "countries": [
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+      "id": "bonette",
+      "name": "Col de la Bonette",
+      "elevation_m": 2715,
+      "coordinates": {
+        "lat": 44.329,
+        "lon": 6.802
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "galibier",
+      "name": "Col du Galibier",
+      "elevation_m": 2642,
+      "coordinates": {
+        "lat": 45.065,
+        "lon": 6.409
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "gavia",
+      "name": "Passo di Gavia",
+      "elevation_m": 2621,
+      "coordinates": {
+        "lat": 46.345,
+        "lon": 10.492
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "hochtor",
+      "name": "Hochtor (Großglockner)",
+      "elevation_m": 2504,
+      "coordinates": {
+        "lat": 47.083,
+        "lon": 12.842
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "umbrail",
+      "name": "Giogo di Santa Maria (Umbrailpass)",
+      "elevation_m": 2503,
+      "coordinates": {
+        "lat": 46.528,
+        "lon": 10.399
+      },
+      "countries": [
+        "ITA",
+        "CHE"
+      ]
+    },
+    {
+      "id": "nufenen",
+      "name": "Nufenenpass (Passo della Novena)",
+      "elevation_m": 2478,
+      "coordinates": {
+        "lat": 46.479,
+        "lon": 8.369
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "timmelsjoch",
+      "name": "Timmelsjoch",
+      "elevation_m": 2474,
+      "coordinates": {
+        "lat": 46.911,
+        "lon": 11.112
+      },
+      "countries": [
+        "AUT",
+        "ITA"
+      ]
+    },
+    {
+      "id": "grand-saint-bernard",
+      "name": "Col du Grand-Saint-Bernard",
+      "elevation_m": 2469,
+      "coordinates": {
+        "lat": 45.871,
+        "lon": 7.17
+      },
+      "countries": [
+        "CHE",
+        "ITA"
+      ]
+    },
+    {
+      "id": "furka",
+      "name": "Furkapass",
+      "elevation_m": 2429,
+      "coordinates": {
+        "lat": 46.575,
+        "lon": 8.416
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "fuscher-toerl",
+      "name": "Fuscher Törl",
+      "elevation_m": 2428,
+      "coordinates": {
+        "lat": 47.138,
+        "lon": 12.847
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "granon",
+      "name": "Col du Granon",
+      "elevation_m": 2413,
+      "coordinates": {
+        "lat": 44.941,
+        "lon": 6.531
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "fluela",
+      "name": "Flüela Pass",
+      "elevation_m": 2383,
+      "coordinates": {
+        "lat": 46.743,
+        "lon": 9.985
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "izoard",
+      "name": "Col d'Izoard",
+      "elevation_m": 2360,
+      "coordinates": {
+        "lat": 44.82,
+        "lon": 6.734
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "lombarde",
+      "name": "Col de la Lombarde",
+      "elevation_m": 2351,
+      "coordinates": {
+        "lat": 44.204,
+        "lon": 7.176
+      },
+      "countries": [
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+      "id": "bernina",
+      "name": "Bernina Pass",
+      "elevation_m": 2328,
+      "coordinates": {
+        "lat": 46.41,
+        "lon": 10.018
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "cayolle",
+      "name": "Col de la Cayolle",
+      "elevation_m": 2326,
+      "coordinates": {
+        "lat": 44.254,
+        "lon": 6.806
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "forcola",
+      "name": "Forcola di Livigno",
+      "elevation_m": 2315,
+      "coordinates": {
+        "lat": 46.437,
+        "lon": 10.064
+      },
+      "countries": [
+        "ITA",
+        "CHE"
+      ]
+    },
+    {
+      "id": "albula",
+      "name": "Albula Pass",
+      "elevation_m": 2312,
+      "coordinates": {
+        "lat": 46.577,
+        "lon": 9.843
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "foscagno",
+      "name": "Passo di Foscagno",
+      "elevation_m": 2291,
+      "coordinates": {
+        "lat": 46.478,
+        "lon": 10.229
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "julier",
+      "name": "Julier Pass",
+      "elevation_m": 2284,
+      "coordinates": {
+        "lat": 46.465,
+        "lon": 9.717
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "allos",
+      "name": "Col d'Allos",
+      "elevation_m": 2247,
+      "coordinates": {
+        "lat": 44.272,
+        "lon": 6.696
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "pordoi",
+      "name": "Passo Pordoi",
+      "elevation_m": 2239,
+      "coordinates": {
+        "lat": 46.487,
+        "lon": 11.813
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "giau",
+      "name": "Passo Giau",
+      "elevation_m": 2236,
+      "coordinates": {
+        "lat": 46.468,
+        "lon": 12.038
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "susten",
+      "name": "Sustenpass",
+      "elevation_m": 2224,
+      "coordinates": {
+        "lat": 46.744,
+        "lon": 8.435
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "sella",
+      "name": "Passo Sella",
+      "elevation_m": 2218,
+      "coordinates": {
+        "lat": 46.497,
+        "lon": 11.779
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "portet",
+      "name": "Col de Portet",
+      "elevation_m": 2215,
+      "coordinates": {
+        "lat": 42.826,
+        "lon": 0.353
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "penser-joch",
+      "name": "Passo Pennes (Penser Joch)",
+      "elevation_m": 2211,
+      "coordinates": {
+        "lat": 46.82,
+        "lon": 11.392
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "eira",
+      "name": "Passo d'Eira",
+      "elevation_m": 2208,
+      "coordinates": {
+        "lat": 46.513,
+        "lon": 10.196
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "valparola",
+      "name": "Passo Valparola",
+      "elevation_m": 2192,
+      "coordinates": {
+        "lat": 46.533,
+        "lon": 12.002
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "petit-saint-bernard",
+      "name": "Col du Petit-Saint-Bernard",
+      "elevation_m": 2188,
+      "coordinates": {
+        "lat": 45.676,
+        "lon": 6.882
+      },
+      "countries": [
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+      "id": "grimsel",
+      "name": "Grimselpass",
+      "elevation_m": 2164,
+      "coordinates": {
+        "lat": 46.561,
+        "lon": 8.338
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "ofen",
+      "name": "Ofenpass (Pass dal Fuorn)",
+      "elevation_m": 2149,
+      "coordinates": {
+        "lat": 46.649,
+        "lon": 10.289
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "urdele",
+      "name": "Pasul Urdele (Transalpina)",
+      "elevation_m": 2145,
+      "coordinates": {
+        "lat": 45.336,
+        "lon": 23.673
+      },
+      "countries": [
+        "ROU"
+      ]
+    },
+    {
+      "id": "gardena",
+      "name": "Passo Gardena",
+      "elevation_m": 2121,
+      "coordinates": {
+        "lat": 46.552,
+        "lon": 11.818
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "tourmalet",
+      "name": "Col du Tourmalet",
+      "elevation_m": 2115,
+      "coordinates": {
+        "lat": 42.907,
+        "lon": 0.147
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "splugen-ch",
+      "name": "Splügenpass (Passo dello Spluga)",
+      "elevation_m": 2114,
+      "coordinates": {
+        "lat": 46.538,
+        "lon": 9.351
+      },
+      "countries": [
+        "CHE",
+        "ITA"
+      ]
+    },
+    {
+      "id": "vars",
+      "name": "Col de Vars",
+      "elevation_m": 2108,
+      "coordinates": {
+        "lat": 44.548,
+        "lon": 6.706
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "gotthard",
+      "name": "Gotthardpass (Saint-Gothard)",
+      "elevation_m": 2106,
+      "coordinates": {
+        "lat": 46.559,
+        "lon": 8.561
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "falzarego",
+      "name": "Passo Falzarego",
+      "elevation_m": 2105,
+      "coordinates": {
+        "lat": 46.519,
+        "lon": 12.006
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "jaufenpass",
+      "name": "Passo Giovo (Jaufenpass)",
+      "elevation_m": 2094,
+      "coordinates": {
+        "lat": 46.824,
+        "lon": 11.336
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "mont-cenis",
+      "name": "Col du Mont-Cenis",
+      "elevation_m": 2083,
+      "coordinates": {
+        "lat": 45.253,
+        "lon": 6.883
+      },
+      "countries": [
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+      "id": "mangart",
+      "name": "Mangart Saddle",
+      "elevation_m": 2072,
+      "coordinates": {
+        "lat": 46.441,
+        "lon": 13.664
+      },
+      "countries": [
+        "SVN"
+      ]
+    },
+    {
+      "id": "bonaigua",
+      "name": "Puerto de la Bonaigua",
+      "elevation_m": 2072,
+      "coordinates": {
+        "lat": 42.634,
+        "lon": 0.936
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "coll-de-pal",
+      "name": "Coll de Pal",
+      "elevation_m": 2070,
+      "coordinates": {
+        "lat": 42.297,
+        "lon": 1.846
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "croix-de-fer",
+      "name": "Col de la Croix de Fer",
+      "elevation_m": 2067,
+      "coordinates": {
+        "lat": 45.271,
+        "lon": 6.373
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "san-bernardino",
+      "name": "San Bernardino Pass",
+      "elevation_m": 2066,
+      "coordinates": {
+        "lat": 46.505,
+        "lon": 9.176
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "lautaret",
+      "name": "Col du Lautaret",
+      "elevation_m": 2057,
+      "coordinates": {
+        "lat": 45.036,
+        "lon": 6.407
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "fedaia",
+      "name": "Passo Fedaia",
+      "elevation_m": 2057,
+      "coordinates": {
+        "lat": 46.45,
+        "lon": 11.87
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "staller",
+      "name": "Passo Stalle / Staller Sattel",
+      "elevation_m": 2052,
+      "coordinates": {
+        "lat": 47.122,
+        "lon": 12.164
+      },
+      "countries": [
+        "ITA",
+        "AUT"
+      ]
+    },
+    {
+      "id": "staller-sattel",
+      "name": "Staller Sattel",
+      "elevation_m": 2052,
+      "coordinates": {
+        "lat": 47.122,
+        "lon": 12.164
+      },
+      "countries": [
+        "AUT",
+        "ITA"
+      ]
+    },
+    {
+      "id": "oberalp",
+      "name": "Oberalppass",
+      "elevation_m": 2044,
+      "coordinates": {
+        "lat": 46.659,
+        "lon": 8.671
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "balea",
+      "name": "Bâlea (Transfăgărășan)",
+      "elevation_m": 2042,
+      "coordinates": {
+        "lat": 45.598,
+        "lon": 24.617
+      },
+      "countries": [
+        "ROU"
+      ]
+    },
+    {
+      "id": "bielerhoehe",
+      "name": "Bielerhöhe (Silvretta)",
+      "elevation_m": 2036,
+      "coordinates": {
+        "lat": 46.91,
+        "lon": 10.093
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "valles",
+      "name": "Passo Valles",
+      "elevation_m": 2032,
+      "coordinates": {
+        "lat": 46.343,
+        "lon": 11.793
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "kuehtai",
+      "name": "Kühtaisattel",
+      "elevation_m": 2017,
+      "coordinates": {
+        "lat": 47.213,
+        "lon": 11.02
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "simplon-ch",
+      "name": "Simplonpass",
+      "elevation_m": 2005,
+      "coordinates": {
+        "lat": 46.246,
+        "lon": 8.056
+      },
+      "countries": [
+        "CHE",
+        "ITA"
+      ]
+    },
+    {
+      "id": "pailheres",
+      "name": "Col de Pailhères",
+      "elevation_m": 2001,
+      "coordinates": {
+        "lat": 42.759,
+        "lon": 1.914
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "ragua",
+      "name": "Puerto de la Ragua",
+      "elevation_m": 2000,
+      "coordinates": {
+        "lat": 37.037,
+        "lon": -3.059
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "sarennes",
+      "name": "Col de Sarenne",
+      "elevation_m": 1999,
+      "coordinates": {
+        "lat": 45.078,
+        "lon": 6.128
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "madeleine",
+      "name": "Col de la Madeleine",
+      "elevation_m": 1993,
+      "coordinates": {
+        "lat": 45.464,
+        "lon": 6.395
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "larche",
+      "name": "Col de Larche (Colle della Maddalena)",
+      "elevation_m": 1991,
+      "coordinates": {
+        "lat": 44.398,
+        "lon": 6.974
+      },
+      "countries": [
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+      "id": "rolle",
+      "name": "Passo Rolle",
+      "elevation_m": 1989,
+      "coordinates": {
+        "lat": 46.297,
+        "lon": 11.8
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "erbe",
+      "name": "Passo delle Erbe (Würzjoch)",
+      "elevation_m": 1987,
+      "coordinates": {
+        "lat": 46.654,
+        "lon": 11.812
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "roselend",
+      "name": "Cormet de Roselend",
+      "elevation_m": 1968,
+      "coordinates": {
+        "lat": 45.671,
+        "lon": 6.652
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "grosse-scheidegg",
+      "name": "Grosse Scheidegg",
+      "elevation_m": 1962,
+      "coordinates": {
+        "lat": 46.656,
+        "lon": 8.103
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "klausen",
+      "name": "Klausen Pass",
+      "elevation_m": 1948,
+      "coordinates": {
+        "lat": 46.889,
+        "lon": 8.876
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "glandon",
+      "name": "Col du Glandon",
+      "elevation_m": 1924,
+      "coordinates": {
+        "lat": 45.271,
+        "lon": 6.338
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "san-pellegrino",
+      "name": "Passo San Pellegrino",
+      "elevation_m": 1918,
+      "coordinates": {
+        "lat": 46.378,
+        "lon": 11.772
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "puymorens",
+      "name": "Col du Puymorens",
+      "elevation_m": 1915,
+      "coordinates": {
+        "lat": 42.541,
+        "lon": 1.825
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "lukmanier",
+      "name": "Lukmanier Pass",
+      "elevation_m": 1914,
+      "coordinates": {
+        "lat": 46.626,
+        "lon": 8.802
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "hahntennjoch",
+      "name": "Hahntennjoch",
+      "elevation_m": 1894,
+      "coordinates": {
+        "lat": 47.3,
+        "lon": 10.75
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "croce-domini",
+      "name": "Passo di Croce Domini",
+      "elevation_m": 1892,
+      "coordinates": {
+        "lat": 45.823,
+        "lon": 10.402
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "creueta",
+      "name": "Collada de la Creueta",
+      "elevation_m": 1888,
+      "coordinates": {
+        "lat": 42.301,
+        "lon": 2.028
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "tonale",
+      "name": "Passo Tonale",
+      "elevation_m": 1884,
+      "coordinates": {
+        "lat": 46.257,
+        "lon": 10.603
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "campolongo",
+      "name": "Passo Campolongo",
+      "elevation_m": 1875,
+      "coordinates": {
+        "lat": 46.51,
+        "lon": 11.872
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "navacerrada",
+      "name": "Puerto de Navacerrada",
+      "elevation_m": 1858,
+      "coordinates": {
+        "lat": 40.785,
+        "lon": -4.006
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "montgenevre",
+      "name": "Col de Montgenèvre",
+      "elevation_m": 1854,
+      "coordinates": {
+        "lat": 44.932,
+        "lon": 6.729
+      },
+      "countries": [
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+      "id": "mortirolo",
+      "name": "Passo della Foppa (Mortirolo)",
+      "elevation_m": 1852,
+      "coordinates": {
+        "lat": 46.233,
+        "lon": 10.288
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "cotos",
+      "name": "Puerto de Cotos",
+      "elevation_m": 1830,
+      "coordinates": {
+        "lat": 40.817,
+        "lon": -3.961
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "vivione",
+      "name": "Passo del Vivione",
+      "elevation_m": 1828,
+      "coordinates": {
+        "lat": 46.016,
+        "lon": 10.241
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "maloja",
+      "name": "Maloja Pass",
+      "elevation_m": 1815,
+      "coordinates": {
+        "lat": 46.404,
+        "lon": 9.697
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "tre-croci",
+      "name": "Passo Tre Croci",
+      "elevation_m": 1809,
+      "coordinates": {
+        "lat": 46.545,
+        "lon": 12.163
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "pourtalet",
+      "name": "Col du Pourtalet / Puerto del Portalet",
+      "elevation_m": 1794,
+      "coordinates": {
+        "lat": 42.812,
+        "lon": -0.398
+      },
+      "countries": [
+        "FRA",
+        "ESP"
+      ]
+    },
+    {
+      "id": "portalet",
+      "name": "Puerto del Portalet / Col du Pourtalet",
+      "elevation_m": 1794,
+      "coordinates": {
+        "lat": 42.812,
+        "lon": -0.398
+      },
+      "countries": [
+        "ESP",
+        "FRA"
+      ]
+    },
+    {
+      "id": "collada-toses",
+      "name": "Collada de Toses",
+      "elevation_m": 1790,
+      "coordinates": {
+        "lat": 42.351,
+        "lon": 2.056
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "soelkpass",
+      "name": "Sölkpass",
+      "elevation_m": 1788,
+      "coordinates": {
+        "lat": 47.32,
+        "lon": 13.973
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "croix-vd",
+      "name": "Col de la Croix (VD)",
+      "elevation_m": 1778,
+      "coordinates": {
+        "lat": 46.33,
+        "lon": 7.036
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "flexenpass",
+      "name": "Flexenpass",
+      "elevation_m": 1773,
+      "coordinates": {
+        "lat": 47.188,
+        "lon": 10.205
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "staulanza",
+      "name": "Passo Staulanza",
+      "elevation_m": 1773,
+      "coordinates": {
+        "lat": 46.409,
+        "lon": 12.072
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "turracher",
+      "name": "Turracher Höhe",
+      "elevation_m": 1763,
+      "coordinates": {
+        "lat": 46.913,
+        "lon": 13.874
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "furkajoch-vbg",
+      "name": "Furkajoch (Vorarlberg)",
+      "elevation_m": 1761,
+      "coordinates": {
+        "lat": 47.333,
+        "lon": 9.9
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "pierre-st-martin",
+      "name": "Col de la Pierre Saint-Martin",
+      "elevation_m": 1760,
+      "coordinates": {
+        "lat": 42.979,
+        "lon": -0.746
+      },
+      "countries": [
+        "FRA",
+        "ESP"
+      ]
+    },
+    {
+      "id": "bales",
+      "name": "Port de Balès",
+      "elevation_m": 1755,
+      "coordinates": {
+        "lat": 42.877,
+        "lon": 0.594
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "costalunga",
+      "name": "Passo di Costalunga (Karerpass)",
+      "elevation_m": 1745,
+      "coordinates": {
+        "lat": 46.417,
+        "lon": 11.6
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "obertauern",
+      "name": "Radstädter Tauern (Obertauern)",
+      "elevation_m": 1738,
+      "coordinates": {
+        "lat": 47.25,
+        "lon": 13.55
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "aubisque",
+      "name": "Col d'Aubisque",
+      "elevation_m": 1709,
+      "coordinates": {
+        "lat": 42.974,
+        "lon": -0.334
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "cubilla",
+      "name": "Puerto de La Cubilla",
+      "elevation_m": 1683,
+      "coordinates": {
+        "lat": 43.09,
+        "lon": -5.929
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "noyer",
+      "name": "Col du Noyer",
+      "elevation_m": 1664,
+      "coordinates": {
+        "lat": 44.708,
+        "lon": 5.875
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "katschberg",
+      "name": "Katschbergpass",
+      "elevation_m": 1641,
+      "coordinates": {
+        "lat": 47.055,
+        "lon": 13.61
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "monte-croce-comelico",
+      "name": "Passo di Monte Croce di Comelico (Kreuzbergpass)",
+      "elevation_m": 1636,
+      "coordinates": {
+        "lat": 46.64,
+        "lon": 12.379
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "saisies",
+      "name": "Col des Saisies",
+      "elevation_m": 1633,
+      "coordinates": {
+        "lat": 45.756,
+        "lon": 6.538
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "glaubenbielen",
+      "name": "Glaubenbielen Pass",
+      "elevation_m": 1611,
+      "coordinates": {
+        "lat": 46.798,
+        "lon": 8.061
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "vrsic",
+      "name": "Vršič",
+      "elevation_m": 1611,
+      "coordinates": {
+        "lat": 46.436,
+        "lon": 13.744
+      },
+      "countries": [
+        "SVN"
+      ]
+    },
+    {
+      "id": "san-glorio",
+      "name": "Puerto de San Glorio",
+      "elevation_m": 1609,
+      "coordinates": {
+        "lat": 43.055,
+        "lon": -4.714
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "duran",
+      "name": "Passo Duran",
+      "elevation_m": 1605,
+      "coordinates": {
+        "lat": 46.329,
+        "lon": 12.161
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "pas-de-peyrol",
+      "name": "Pas de Peyrol (Puy Mary)",
+      "elevation_m": 1589,
+      "coordinates": {
+        "lat": 45.129,
+        "lon": 2.65
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "ventana",
+      "name": "Puerto de Ventana",
+      "elevation_m": 1587,
+      "coordinates": {
+        "lat": 43.039,
+        "lon": -6.03
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "agnes",
+      "name": "Col d'Agnès",
+      "elevation_m": 1570,
+      "coordinates": {
+        "lat": 42.83,
+        "lon": 1.424
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "telegraphe",
+      "name": "Col du Télégraphe",
+      "elevation_m": 1566,
+      "coordinates": {
+        "lat": 45.19,
+        "lon": 6.457
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "vegarada",
+      "name": "Puerto de Vegarada",
+      "elevation_m": 1555,
+      "coordinates": {
+        "lat": 43.037,
+        "lon": -5.382
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "pragel",
+      "name": "Pragel Pass",
+      "elevation_m": 1548,
+      "coordinates": {
+        "lat": 47.002,
+        "lon": 8.948
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "pillon",
+      "name": "Col du Pillon",
+      "elevation_m": 1546,
+      "coordinates": {
+        "lat": 46.35,
+        "lon": 7.144
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "glaubenberg",
+      "name": "Glaubenberg Pass",
+      "elevation_m": 1543,
+      "coordinates": {
+        "lat": 46.884,
+        "lon": 8.18
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "leitariegos",
+      "name": "Puerto de Leitariegos",
+      "elevation_m": 1528,
+      "coordinates": {
+        "lat": 42.937,
+        "lon": -6.445
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "forclaz-vs",
+      "name": "Col de la Forclaz (VS)",
+      "elevation_m": 1526,
+      "coordinates": {
+        "lat": 46.066,
+        "lon": 7.017
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "beklemeto",
+      "name": "Beklemeto (Troyan)",
+      "elevation_m": 1525,
+      "coordinates": {
+        "lat": 42.8,
+        "lon": 24.65
+      },
+      "countries": [
+        "BGR"
+      ]
+    },
+    {
+      "id": "gampenpass",
+      "name": "Passo delle Palade (Gampenpass)",
+      "elevation_m": 1518,
+      "coordinates": {
+        "lat": 46.484,
+        "lon": 11.035
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "lers",
+      "name": "Port de Lers",
+      "elevation_m": 1517,
+      "coordinates": {
+        "lat": 42.814,
+        "lon": 1.376
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "gerlos",
+      "name": "Gerlos Pass",
+      "elevation_m": 1509,
+      "coordinates": {
+        "lat": 47.239,
+        "lon": 12.044
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "jaunpass",
+      "name": "Jaunpass",
+      "elevation_m": 1509,
+      "coordinates": {
+        "lat": 46.601,
+        "lon": 7.393
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "resia",
+      "name": "Passo Resia / Reschenpass",
+      "elevation_m": 1507,
+      "coordinates": {
+        "lat": 46.836,
+        "lon": 10.508
+      },
+      "countries": [
+        "ITA",
+        "AUT"
+      ]
+    },
+    {
+      "id": "jau",
+      "name": "Col de Jau",
+      "elevation_m": 1506,
+      "coordinates": {
+        "lat": 42.701,
+        "lon": 2.377
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "tarna",
+      "name": "Puerto de Tarna",
+      "elevation_m": 1490,
+      "coordinates": {
+        "lat": 43.095,
+        "lon": -5.241
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "aspin",
+      "name": "Col d'Aspin",
+      "elevation_m": 1489,
+      "coordinates": {
+        "lat": 42.935,
+        "lon": 0.292
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "somiedo",
+      "name": "Puerto de Somiedo",
+      "elevation_m": 1486,
+      "coordinates": {
+        "lat": 43.086,
+        "lon": -6.239
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "soulor",
+      "name": "Col du Soulor",
+      "elevation_m": 1474,
+      "coordinates": {
+        "lat": 42.989,
+        "lon": -0.313
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "montets",
+      "name": "Col des Montets",
+      "elevation_m": 1461,
+      "coordinates": {
+        "lat": 46.002,
+        "lon": 6.926
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "croix-st-robert",
+      "name": "Col de la Croix Saint-Robert",
+      "elevation_m": 1451,
+      "coordinates": {
+        "lat": 45.576,
+        "lon": 2.868
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "mosses",
+      "name": "Col des Mosses",
+      "elevation_m": 1445,
+      "coordinates": {
+        "lat": 46.408,
+        "lon": 7.084
+      },
+      "countries": [
+        "CHE"
+      ]
+    },
+    {
+      "id": "petrohan",
+      "name": "Petrohan",
+      "elevation_m": 1440,
+      "coordinates": {
+        "lat": 43.237,
+        "lon": 23.116
+      },
+      "countries": [
+        "BGR"
+      ]
+    },
+    {
+      "id": "chioula",
+      "name": "Col du Chioula",
+      "elevation_m": 1431,
+      "coordinates": {
+        "lat": 42.733,
+        "lon": 1.901
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "prislop-ro",
+      "name": "Pasul Prislop",
+      "elevation_m": 1416,
+      "coordinates": {
+        "lat": 47.714,
+        "lon": 24.281
+      },
+      "countries": [
+        "ROU"
+      ]
+    },
+    {
+      "id": "riedberg",
+      "name": "Riedbergpass",
+      "elevation_m": 1407,
+      "coordinates": {
+        "lat": 47.469,
+        "lon": 10.2
+      },
+      "countries": [
+        "DEU"
+      ]
+    },
+    {
+      "id": "croix-morand",
+      "name": "Col de la Croix-Morand",
+      "elevation_m": 1401,
+      "coordinates": {
+        "lat": 45.596,
+        "lon": 2.869
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "pajares",
+      "name": "Puerto de Pajares",
+      "elevation_m": 1378,
+      "coordinates": {
+        "lat": 43.05,
+        "lon": -5.78
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "brennero",
+      "name": "Passo del Brennero / Brennerpass",
+      "elevation_m": 1370,
+      "coordinates": {
+        "lat": 47.001,
+        "lon": 11.507
+      },
+      "countries": [
+        "ITA",
+        "AUT"
+      ]
+    },
+    {
+      "id": "cereda",
+      "name": "Passo Cereda",
+      "elevation_m": 1369,
+      "coordinates": {
+        "lat": 46.205,
+        "lon": 11.901
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "morte",
+      "name": "Col de la Morte (Alpe du Grand-Serre)",
+      "elevation_m": 1368,
+      "coordinates": {
+        "lat": 45.01,
+        "lon": 5.85
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "loibl",
+      "name": "Loiblpass / Ljubelj",
+      "elevation_m": 1367,
+      "coordinates": {
+        "lat": 46.444,
+        "lon": 14.266
+      },
+      "countries": [
+        "AUT",
+        "SVN"
+      ]
+    },
+    {
+      "id": "mendelpass",
+      "name": "Passo della Mendola (Mendelpass)",
+      "elevation_m": 1363,
+      "coordinates": {
+        "lat": 46.419,
+        "lon": 11.239
+      },
+      "countries": [
+        "ITA"
+      ]
+    },
+    {
+      "id": "san-lorenzo",
+      "name": "Puerto de San Lorenzo",
+      "elevation_m": 1350,
+      "coordinates": {
+        "lat": 43.104,
+        "lon": -6.197
+      },
+      "countries": [
+        "ESP"
+      ]
+    },
+    {
+      "id": "mente",
+      "name": "Col de Menté",
+      "elevation_m": 1349,
+      "coordinates": {
+        "lat": 42.94,
+        "lon": 0.76
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "dientner-sattel",
+      "name": "Dientner Sattel",
+      "elevation_m": 1342,
+      "coordinates": {
+        "lat": 47.38,
+        "lon": 13.05
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "filzensattel",
+      "name": "Filzensattel",
+      "elevation_m": 1290,
+      "coordinates": {
+        "lat": 47.37,
+        "lon": 13.11
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "soriska-planina",
+      "name": "Soriška planina (Bohinjsko sedlo)",
+      "elevation_m": 1277,
+      "coordinates": {
+        "lat": 46.207,
+        "lon": 14.036
+      },
+      "countries": [
+        "SVN"
+      ]
+    },
+    {
+      "id": "pass-thurn",
+      "name": "Pass Thurn",
+      "elevation_m": 1274,
+      "coordinates": {
+        "lat": 47.383,
+        "lon": 12.39
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "port",
+      "name": "Col de Port",
+      "elevation_m": 1249,
+      "coordinates": {
+        "lat": 42.917,
+        "lon": 1.396
+      },
+      "countries": [
+        "FRA"
+      ]
+    },
+    {
+      "id": "feldbergpass",
+      "name": "Feldbergpass",
+      "elevation_m": 1233,
+      "coordinates": {
+        "lat": 47.873,
+        "lon": 8.003
+      },
+      "countries": [
+        "DEU"
+      ]
+    },
+    {
+      "id": "certovica",
+      "name": "Čertovica",
+      "elevation_m": 1232,
+      "coordinates": {
+        "lat": 48.934,
+        "lon": 19.729
+      },
+      "countries": [
+        "SVK"
+      ]
+    },
+    {
+      "id": "seebergsattel-karavanke",
+      "name": "Jezerski vrh (Seebergsattel)",
+      "elevation_m": 1218,
+      "coordinates": {
+        "lat": 46.418,
+        "lon": 14.533
+      },
+      "countries": [
+        "AUT",
+        "SVN"
+      ]
+    },
+    {
+      "id": "fernpass",
+      "name": "Fernpass",
+      "elevation_m": 1216,
+      "coordinates": {
+        "lat": 47.377,
+        "lon": 10.856
+      },
+      "countries": [
+        "AUT"
+      ]
+    },
+    {
+      "id": "hirschbichl",
+      "name": "Hirschbichlpass",
+      "elevation_m": 1183,
+      "coordinates": {
+        "lat": 47.594,
+        "lon": 12.825
+      },
+      "countries": [
+        "DEU",
+        "AUT"
+      ]
+    },
+    {
+      "id": "oberjoch",
+      "name": "Oberjochpass",
+      "elevation_m": 1178,
+      "coordinates": {
+        "lat": 47.56,
+        "lon": 10.44
+      },
+      "countries": [
+        "DEU"
+      ]
+    },
+    {
+      "id": "predil-it",
+      "name": "Passo del Predil / Predel",
+      "elevation_m": 1156,
+      "coordinates": {
+        "lat": 46.43,
+        "lon": 13.571
+      },
+      "countries": [
+        "ITA",
+        "SVN"
+      ]
+    },
+    {
+      "id": "predel-si",
+      "name": "Predel / Predil",
+      "elevation_m": 1156,
+      "coordinates": {
+        "lat": 46.43,
+        "lon": 13.571
+      },
+      "countries": [
+        "SVN",
+        "ITA"
+      ]
+    },
+    {
+      "id": "shipka",
+      "name": "Shipka",
+      "elevation_m": 1150,
+      "coordinates": {
+        "lat": 42.731,
+        "lon": 25.327
+      },
+      "countries": [
+        "BGR"
+      ]
+    },
+    {
+      "id": "notschrei",
+      "name": "Notschrei",
+      "elevation_m": 1121,
+      "coordinates": {
+        "lat": 47.886,
+        "lon": 7.924
+      },
+      "countries": [
+        "DEU"
+      ]
+    },
+    {
+      "id": "bretterschachten",
+      "name": "Bayerischer Wald – Bretterschachten",
+      "elevation_m": 1120,
+      "coordinates": {
+        "lat": 49.115,
+        "lon": 13.104
+      },
+      "countries": [
+        "DEU"
+      ]
+    },
+    {
+      "id": "wurzenpass",
+      "name": "Wurzenpass / Korensko sedlo",
+      "elevation_m": 1073,
+      "coordinates": {
+        "lat": 46.528,
+        "lon": 13.716
+      },
+      "countries": [
+        "AUT",
+        "SVN"
+      ]
+    },
+    {
+      "id": "krowiarki",
+      "name": "Przełęcz Krowiarki",
+      "elevation_m": 1011,
+      "coordinates": {
+        "lat": 49.588,
+        "lon": 19.582
+      },
+      "countries": [
+        "POL"
+      ]
+    },
+    {
+      "id": "thurner",
+      "name": "Thurner Pass",
+      "elevation_m": 1010,
+      "coordinates": {
+        "lat": 47.983,
+        "lon": 8.133
+      },
+      "countries": [
+        "DEU"
+      ]
+    },
+    {
+      "id": "sturec",
+      "name": "Šturec",
+      "elevation_m": 1010,
+      "coordinates": {
+        "lat": 48.846,
+        "lon": 19.07
+      },
+      "countries": [
+        "SVK"
+      ]
+    },
+    {
+      "id": "brunig",
+      "name": "Brünigpass",
+      "elevation_m": 1008,
+      "coordinates": {
+        "lat": 46.748,
+        "lon": 8.189
+      },
+      "countries": [
+        "CHE"
+      ]
+    }
+  ],
+  "by_country": {
+    "AUT": [
+      "brennero",
+      "staller",
+      "resia",
+      "hochtor",
+      "fuscher-toerl",
+      "timmelsjoch",
+      "kuehtai",
+      "obertauern",
+      "katschberg",
+      "bielerhoehe",
+      "hahntennjoch",
+      "soelkpass",
+      "pass-thurn",
+      "turracher",
+      "fernpass",
+      "staller-sattel",
+      "loibl",
+      "wurzenpass",
+      "flexenpass",
+      "furkajoch-vbg",
+      "gerlos",
+      "dientner-sattel",
+      "filzensattel",
+      "seebergsattel-karavanke",
+      "hirschbichl"
+    ],
+    "BGR": [
+      "shipka",
+      "beklemeto",
+      "petrohan"
+    ],
+    "CHE": [
+      "forcola",
+      "umbrail",
+      "nufenen",
+      "furka",
+      "grimsel",
+      "susten",
+      "oberalp",
+      "gotthard",
+      "simplon-ch",
+      "san-bernardino",
+      "splugen-ch",
+      "albula",
+      "fluela",
+      "julier",
+      "bernina",
+      "maloja",
+      "ofen",
+      "lukmanier",
+      "klausen",
+      "pragel",
+      "glaubenberg",
+      "glaubenbielen",
+      "grosse-scheidegg",
+      "grand-saint-bernard",
+      "brunig",
+      "jaunpass",
+      "pillon",
+      "mosses",
+      "croix-vd",
+      "forclaz-vs"
+    ],
+    "DEU": [
+      "riedberg",
+      "notschrei",
+      "oberjoch",
+      "thurner",
+      "feldbergpass",
+      "hirschbichl",
+      "bretterschachten"
+    ],
+    "ESP": [
+      "pourtalet",
+      "pierre-st-martin",
+      "bonaigua",
+      "navacerrada",
+      "cotos",
+      "san-glorio",
+      "pajares",
+      "portalet",
+      "collada-toses",
+      "coll-de-pal",
+      "creueta",
+      "cubilla",
+      "ventana",
+      "ragua",
+      "tarna",
+      "vegarada",
+      "leitariegos",
+      "somiedo",
+      "san-lorenzo"
+    ],
+    "FRA": [
+      "iseran",
+      "agnel",
+      "bonette",
+      "galibier",
+      "izoard",
+      "vars",
+      "allos",
+      "cayolle",
+      "madeleine",
+      "croix-de-fer",
+      "glandon",
+      "roselend",
+      "mont-cenis",
+      "petit-saint-bernard",
+      "lautaret",
+      "granon",
+      "sarennes",
+      "montets",
+      "saisies",
+      "telegraphe",
+      "lombarde",
+      "larche",
+      "montgenevre",
+      "pourtalet",
+      "pierre-st-martin",
+      "puymorens",
+      "tourmalet",
+      "aubisque",
+      "soulor",
+      "aspin",
+      "bales",
+      "portet",
+      "pailheres",
+      "agnes",
+      "lers",
+      "chioula",
+      "mente",
+      "jau",
+      "croix-morand",
+      "croix-st-robert",
+      "pas-de-peyrol",
+      "noyer",
+      "morte",
+      "port",
+      "portalet"
+    ],
+    "ITA": [
+      "agnel",
+      "mont-cenis",
+      "petit-saint-bernard",
+      "lombarde",
+      "larche",
+      "montgenevre",
+      "stelvio",
+      "gavia",
+      "pordoi",
+      "sella",
+      "gardena",
+      "giau",
+      "falzarego",
+      "valparola",
+      "fedaia",
+      "rolle",
+      "san-pellegrino",
+      "tonale",
+      "croce-domini",
+      "mortirolo",
+      "tre-croci",
+      "valles",
+      "costalunga",
+      "campolongo",
+      "penser-joch",
+      "jaufenpass",
+      "gampenpass",
+      "mendelpass",
+      "foscagno",
+      "eira",
+      "monte-croce-comelico",
+      "predil-it",
+      "brennero",
+      "staller",
+      "resia",
+      "forcola",
+      "umbrail",
+      "erbe",
+      "staulanza",
+      "duran",
+      "cereda",
+      "vivione",
+      "simplon-ch",
+      "splugen-ch",
+      "grand-saint-bernard",
+      "timmelsjoch",
+      "staller-sattel",
+      "predel-si"
+    ],
+    "POL": [
+      "krowiarki"
+    ],
+    "ROU": [
+      "urdele",
+      "balea",
+      "prislop-ro"
+    ],
+    "SVK": [
+      "certovica",
+      "sturec"
+    ],
+    "SVN": [
+      "predil-it",
+      "loibl",
+      "wurzenpass",
+      "seebergsattel-karavanke",
+      "vrsic",
+      "mangart",
+      "predel-si",
+      "soriska-planina"
+    ]
+  }
+}

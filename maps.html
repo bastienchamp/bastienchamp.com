@@ -109,17 +109,30 @@
 
   <script>
     function initMap() {
-      const position = { lat: 45.880131, lng: 10.182550 };
+      const position = { lat: 46.774311, lng: 9.204760 };
 
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 7.70,
-        center: position,
-        disableDefaultUI: true,
-        zoomControl: true, 
-        keyboardShortcuts: false,
-        gestureHandling: "greedy",
-        minZoom: 6 
-      });
+const map = new google.maps.Map(document.getElementById("map"), {
+  zoom: 6.70,
+  center: position,
+  disableDefaultUI: true,
+  zoomControl: true,
+  keyboardShortcuts: false,
+  gestureHandling: "greedy",
+  minZoom: 4,
+
+  // ✅ styles doit être un tableau, avec "stylers"
+  styles: [
+    // cacher tous les labels (texte) des routes
+    { featureType: "road", elementType: "labels", stylers: [{ visibility: "off" }] },
+    // cacher les icônes de routes (ex: numéros d’autoroute)
+    { featureType: "road", elementType: "labels.icon", stylers: [{ visibility: "off" }] },
+
+    // redondance ciblée pour les autoroutes (utile selon les régions)
+    { featureType: "road.highway", elementType: "labels", stylers: [{ visibility: "off" }] },
+    { featureType: "road.highway", elementType: "labels.icon", stylers: [{ visibility: "off" }] }
+  ]
+});
+      
 
       const gpxFiles = [
         'resources/gpx/17D1.gpx','resources/gpx/17D2.gpx','resources/gpx/17D3.gpx','resources/gpx/17D4.gpx','resources/gpx/17D5.gpx','resources/gpx/17D6.gpx','resources/gpx/17D7.gpx',
