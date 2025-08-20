@@ -22,18 +22,18 @@
     .is-hidden  { visibility: hidden; opacity: 0; pointer-events: none; }
     .is-visible { visibility: visible; opacity: 1; pointer-events: auto; }
 
-    /* Barres fixes — toujours au-dessus des calques de carte */
+    /* Barres fixes */
     .bottom-bar, .top-bar, .left-bar, .right-bar { position: fixed; background: #FFFFFF; z-index: 9996; }
     .bottom-bar { left: 0; right: 0; bottom: 0; height: 1.8vh; }
     .top-bar    { left: 0; right: 0; top: 0;    height: 1.8vh; }
     .left-bar   { left: 0; top: 0; bottom: 0;   width:  1.8vh; }
     .right-bar  { right: 0; top: 0; bottom: 0;  width:  1.8vh; }
 
-    /* Modale fixe (clic) — mêmes styles que les groupes de boutons, largeur 25vw, alignée en bas/gauche */
+    /* Modale info trajet — au-dessus du bouton Import (25vw et mêmes styles que groupes) */
     .custom-modal {
       position: fixed;
       left: calc(1.8vh + 12px);
-      bottom: calc(1.8vh + 12px);
+      bottom: calc(1.8vh + 12px + 38px + 12px); /* bouton (38) + espacement */
       width: 25vw;
       background: rgba(255,255,255,0.92);
       border: 1px solid #E5E5E5;
@@ -48,6 +48,7 @@
       padding-bottom: 2vh;
       padding-top: 1.5vh;
       padding-right: 1.5vh;
+      margin-bottom: 2vh;
       font: 400 16px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 
       opacity: 0;
@@ -57,14 +58,10 @@
       transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
     }
     .custom-modal.is-visible {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateY(0);
+      opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
       transition: opacity .18s ease, transform .18s ease, visibility 0s;
     }
 
-    /* Contenu interne de la modale */
     .custom-modal .modal-header {
       display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px;
     }
@@ -77,6 +74,7 @@
       border: none; background: transparent; cursor: pointer; font-size: 18px; color: #666; padding: 0;
     }
     .custom-modal .close-x:hover { color: #111; }
+    .custom-modal .distance { margin: 6px 0; }
 
     /* Tooltip (hover) */
     .hover-modal {
@@ -89,7 +87,7 @@
     .hover-modal .year  { opacity: 0.9; }
 
     /* ===========================
-       Styles des boutons custom
+       Boutons custom (droite)
        =========================== */
     .map-controls {
       position: fixed;
@@ -121,34 +119,78 @@
     .map-btn.is-on { border-color: #3D55EB; box-shadow: 0 0 0 3px rgba(61,85,235,0.15); }
     .map-btn.is-disabled, .map-btn:disabled { opacity: .5; cursor: not-allowed; }
 
-    /* Bouton texte (sélecteur provider) */
     .map-btn.label {
       width: auto; height: 38px; padding: 0 12px;
       font-size: 13px; font-weight: 600; letter-spacing: .2px;
     }
-
     .map-btn svg { width: 18px; height: 18px; display: block; }
 
     /* Select calques sans chevron */
     .map-select {
       border: 1px solid #E5E5E5; background: #fff; border-radius: 10px; height: 38px;
-      padding: 0 12px; /* plus d'espace chevron */
+      padding: 0 12px;
       font: 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       transition: box-shadow .15s ease, border-color .15s ease;
-
-      /* ✅ supprimer le chevron natif (cross-browser) */
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image: none !important;
-      background-color: #fff;
+      appearance: none; -webkit-appearance: none; -moz-appearance: none;
+      background-image: none !important; background-color: #fff;
     }
-    /* Edge/IE (au cas où) */
     .map-select::-ms-expand { display: none; }
-
     .map-select:hover  { box-shadow: 0 4px 10px rgba(0,0,0,0.14); }
     .map-select:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* ===========================
+       Nouveau bouton Import (gauche)
+       =========================== */
+    .import-bar {
+      position: fixed;
+      left: calc(1.8vh + 12px);
+      bottom: calc(1.8vh + 12px);
+      width: 25vw;
+      padding: 8px;
+      height: 38px;                       /* même hauteur que les boutons à droite */
+      z-index: 9998;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid #E5E5E5;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .import-btn {
+      width: 100%; height: 100%;
+      border: none; background: transparent; cursor: pointer;
+      font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+    }
+    .import-btn:hover { background: rgba(0,0,0,0.03); border-radius: 10px; }
+
+    /* ===========================
+       Modale d'upload centrée
+       =========================== */
+    .upload-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10000;
+      opacity: 0; visibility: hidden;
+      transition: opacity .18s ease, visibility 0s linear .18s;
+    }
+    .upload-overlay.is-visible { opacity: 1; visibility: visible; transition: opacity .18s ease, visibility 0s; }
+    .upload-dialog {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid #E5E5E5;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      width: min(540px, 90vw);
+      padding: 18px 20px;
+      font: 400 15px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+    .upload-dialog h3 { margin: 0 0 8px; font-size: 18px; }
+    .upload-dialog p { margin: 0 0 12px; }
+    .upload-actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .upload-actions .map-btn.label { height: 36px; }
+    .upload-status { font-size: 13px; opacity: 0.85; margin-top: 8px; min-height: 18px; }
   </style>
 </head>
 
@@ -162,13 +204,32 @@
   <div class="left-bar"></div>
   <div class="right-bar"></div>
 
-  <!-- Modale fixe (clic) -->
+  <!-- Modale info (clic trajet) -->
   <div id="trackModal" class="custom-modal"></div>
   <!-- Tooltip (hover) -->
   <div id="hoverModal" class="hover-modal"></div>
 
-  <!-- Overlay fixe pour les contrôles -->
+  <!-- Bouton Import (gauche) -->
+  <div class="import-bar">
+    <button id="importBtn" class="import-btn" type="button">Import .gpx</button>
+    <input id="fileInput" type="file" accept=".gpx,application/gpx+xml" multiple hidden>
+  </div>
+
+  <!-- Overlay fixe pour les contrôles (droite) -->
   <div id="customControls" class="map-controls" aria-label="Contrôles de la carte"></div>
+
+  <!-- Modale d’upload centrée -->
+  <div id="uploadOverlay" class="upload-overlay" aria-hidden="true">
+    <div class="upload-dialog" role="dialog" aria-modal="true" aria-labelledby="upl-title">
+      <h3 id="upl-title">Importer des fichiers GPX</h3>
+      <p>Sélectionnez un ou plusieurs fichiers <strong>.gpx</strong>. Ils seront stockés localement dans un dossier <code>gpx</code> et ajoutés à la carte.</p>
+      <div class="upload-actions">
+        <button id="closeUpload" class="map-btn label" type="button">Fermer</button>
+        <button id="chooseFiles" class="map-btn label" type="button">Choisir des fichiers…</button>
+      </div>
+      <div id="uploadStatus" class="upload-status"></div>
+    </div>
+  </div>
 
   <script>
     // === Centre & zoom par défaut (identiques pour Google & OSM) ===
@@ -179,8 +240,12 @@
     let osmMap = null;        // Leaflet instance
     let currentProvider = 'google';
 
-    // Stockage des routes (pour dessiner aussi sur OSM)
-    const routesData = []; // { coords:[{lat,lng}], color:'#hex', meta:{...} }
+    // Verrous (polylines "lockées") partagés
+    const gLocked = { polyline: null, shadow: null };
+    const oLocked = { polyline: null, shadow: null };
+
+    // Stockage des routes : { coords:[{lat,lng,ele?}], color, meta, g?, o? }
+    const routesData = [];
 
     // UI partagée
     const modal = document.getElementById('trackModal');
@@ -194,15 +259,57 @@
     let hoverTimer = null;
     const HOVER_DELAY = 80;
 
+    // === Helpers distance/élévation ===
+    const R_EARTH = 6371008.8; // m (WGS84)
+    const toRad = d => d * Math.PI / 180;
+    function haversineMeters(p1, p2) {
+      const φ1 = toRad(p1.lat), φ2 = toRad(p2.lat);
+      const Δφ = toRad(p2.lat - p1.lat);
+      const Δλ = toRad(p2.lng - p1.lng);
+      const a = Math.sin(Δφ/2)**2 + Math.cos(φ1)*Math.cos(φ2)*Math.sin(Δλ/2)**2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R_EARTH * c;
+    }
+    function formatKm(km) {
+      const nf = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return nf.format(km);
+    }
+    function formatMetersNoDec(m) {
+      const nf = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+      return nf.format(Math.round(m));
+    }
+    function computeMetrics(coords){
+      let dist2d = 0, elevGainPosM = 0;
+      for (let i=1;i<coords.length;i++){
+        const a=coords[i-1], b=coords[i];
+        if (Number.isFinite(a.lat) && Number.isFinite(a.lng) &&
+            Number.isFinite(b.lat) && Number.isFinite(b.lng)) {
+          dist2d += haversineMeters(a,b);
+        }
+        if (Number.isFinite(a.ele) && Number.isFinite(b.ele)) {
+          const dH = b.ele - a.ele;
+          if (dH > 0) elevGainPosM += dH;
+        }
+      }
+      return { distanceKm2d: dist2d/1000, elevGainPosM };
+    }
+
     const esc = (s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
     function showFixedModal(data) {
+      const dist2dHTML = (typeof data.distanceKm2d === 'number')
+        ? `<div class="distance">Distance&nbsp;: <strong>${formatKm(data.distanceKm2d)}&nbsp;km</strong></div>` : '';
+      const denivHTML = (typeof data.elevGainPosM === 'number')
+        ? `<div class="distance">Dénivelé&nbsp;: <strong>${formatMetersNoDec(data.elevGainPosM)}&nbsp;m+</strong></div>` : '';
+
       modal.innerHTML = `
         <div class="modal-header">
           ${data.year ? `<div class="year">${esc(data.year)}</div>` : `<div class="year"></div>`}
           <button class="close-x" type="button" aria-label="Fermer">×</button>
         </div>
-        <div class="title">${esc(data.trackName)}</div>
+        <div class="title">${esc(data.trackName || 'Trajet')}</div>
+        ${dist2dHTML}
+        ${denivHTML}
         ${data.bike ? `<div class="bike">🏍️ ${esc(data.bike)}</div>` : ''}
         ${data.linkHref ? `<div class="link"><a href="${esc(data.linkHref)}" target="_blank">Voir l’itinéraire</a></div>` : ''}
       `;
@@ -214,7 +321,7 @@
     function showHoverModalAt(data, x, y) {
       hoverModal.innerHTML = `
         ${data.year ? `<div class="year">${esc(data.year)}</div>` : ''}
-        <div class="title">${esc(data.trackName)}</div>
+        <div class="title">${esc(data.trackName || 'Trajet')}</div>
       `;
       const offset = 12;
       hoverModal.style.left = (x + offset) + 'px';
@@ -249,11 +356,12 @@
       });
 
       setupCustomControls();
-      loadAndDrawGpxRoutes();
+      setupImportUI();       // Import + ajout direct sur carte
+      loadAndDrawGpxRoutes();// Traces embarquées
     }
 
     /* ===========================
-       Contrôles custom
+       Contrôles custom (droite)
     ============================ */
     function setupCustomControls() {
       const controlsRoot = document.getElementById("customControls");
@@ -363,6 +471,101 @@
       };
     }
 
+    /* ===========================
+       Nouveau : Import .gpx (gauche) + ajout auto sur carte
+    ============================ */
+    function setupImportUI() {
+      const importBtn = document.getElementById('importBtn');
+      const fileInput = document.getElementById('fileInput');
+      const overlay   = document.getElementById('uploadOverlay');
+      const closeBtn  = document.getElementById('closeUpload');
+      const chooseBtn = document.getElementById('chooseFiles');
+      const statusEl  = document.getElementById('uploadStatus');
+
+      function openOverlay() {
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+      function closeOverlay() {
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+        // status conservé jusqu’à prochaine ouverture
+      }
+
+      async function saveFilesLocally(fileList) {
+        const files = Array.from(fileList || []);
+        if (!files.length) return { saved: 0, method: null, files: [] };
+        // OPFS (Origin Private File System)
+        if (navigator.storage && navigator.storage.getDirectory) {
+          const root = await navigator.storage.getDirectory();
+          const dir = await root.getDirectoryHandle('gpx', { create: true });
+          for (const f of files) {
+            const handle = await dir.getFileHandle(f.name, { create: true });
+            const writable = await handle.createWritable();
+            await writable.write(await f.arrayBuffer());
+            await writable.close();
+          }
+          return { saved: files.length, method: 'opfs', files };
+        }
+        // Fallback simple: localStorage (taille limitée)
+        for (const f of files) {
+          const text = await f.text();
+          localStorage.setItem('gpx/' + f.name, text);
+        }
+        return { saved: files.length, method: 'localStorage', files };
+      }
+
+      async function parseAndAddToMap(file) {
+        const text = await file.text();
+        const route = parseGpxToRoute(text, file.name);
+        routesData.push(route);
+        // Dessine immédiatement sur Google
+        if (gmap) drawSingleRouteOnGoogle(route);
+        // Et sur OSM si déjà initialisé
+        if (osmMap) drawSingleRouteOnOSM(route);
+      }
+
+      async function handleFilesSelected() {
+        const files = fileInput.files;
+        if (!files || files.length === 0) {
+          statusEl.textContent = 'Aucun fichier sélectionné.';
+          return;
+        }
+        statusEl.textContent = 'Import et ajout à la carte…';
+        try {
+          const res = await saveFilesLocally(files);
+          for (const f of res.files) {
+            await parseAndAddToMap(f);
+          }
+          statusEl.textContent = `✅ ${res.saved} fichier(s) importé(s), stocké(s) dans “gpx” (${res.method}) et ajouté(s) à la carte.`;
+          // On ne ferme pas la modale automatiquement pour permettre de voir le status.
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = '❌ Erreur lors de l’import.';
+        } finally {
+          fileInput.value = ''; // reset
+        }
+      }
+
+      // Clic sur le gros bouton → affiche la modale centrée + ouvre le picker
+      importBtn.addEventListener('click', () => {
+        openOverlay();
+        setTimeout(() => fileInput.click(), 50);
+      });
+
+      // Boutons dans la modale
+      chooseBtn.addEventListener('click', () => fileInput.click());
+      closeBtn.addEventListener('click', closeOverlay);
+
+      // Fermer en cliquant hors de la boîte
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeOverlay();
+      });
+
+      // Traitement des fichiers choisis
+      fileInput.addEventListener('change', handleFilesSelected);
+    }
+
     function getZoom() {
       return currentProvider === 'google' ? gmap.getZoom() : (osmMap ? osmMap.getZoom() : DEFAULT_ZOOM);
     }
@@ -389,6 +592,7 @@
           maxZoom: 19,
           attribution: '&copy; OpenStreetMap contributors'
         }).addTo(osmMap);
+        // Dessine toutes les routes qui ne le sont pas encore
         drawRoutesOnOSM();
       }
 
@@ -426,7 +630,173 @@
     }
 
     /* ===========================
-       Chargement & tracé GPX (Google + mémoire pour OSM)
+       Parsing GPX -> route
+    ============================ */
+    const colorByPrefix = {
+      '17': '#EB3D4D', '20': '#3D55EB', '21': '#EBA73D', '23': '#82BEEF', '24': '#968759', '25': '#6B5154',
+    };
+    const fallbackPalette = ['#E91E63','#3F51B5','#009688','#FF9800','#9C27B0','#795548','#00BCD4','#8BC34A'];
+    let nextColorIdx = 0;
+
+    function pickColor(fileName){
+      const m = fileName && fileName.match(/(^|\/)(\d{2})/);
+      if (m && colorByPrefix[m[2]]) return colorByPrefix[m[2]];
+      const c = fallbackPalette[nextColorIdx % fallbackPalette.length];
+      nextColorIdx++;
+      return c;
+    }
+
+    function parseGpxToRoute(gpxText, fileName) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(gpxText, "application/xml");
+
+      const trk = xmlDoc.getElementsByTagName('trk')[0];
+      const nameNode = trk ? trk.getElementsByTagName('name')[0] : null;
+      const yearNode = trk ? trk.getElementsByTagName('year')[0] : null;
+      const bikeNode = trk ? trk.getElementsByTagName('bike')[0] : null;
+      const linkNode = trk ? trk.getElementsByTagName('link')[0] : null;
+
+      const trackName = nameNode ? nameNode.textContent.trim() : (fileName || 'Trajet');
+      const year = yearNode ? yearNode.textContent.trim() : '';
+      const bike = bikeNode ? bikeNode.textContent.trim() : '';
+      const linkHref = linkNode ? linkNode.getAttribute('href') : '';
+
+      const trkpts = xmlDoc.getElementsByTagName('trkpt');
+      const coords = [];
+      for (let i = 0; i < trkpts.length; i++) {
+        const lat = parseFloat(trkpts[i].getAttribute('lat'));
+        const lon = parseFloat(trkpts[i].getAttribute('lon'));
+        const eleNode = trkpts[i].getElementsByTagName('ele')[0];
+        const ele = eleNode ? parseFloat(eleNode.textContent) : NaN;
+        coords.push({ lat, lng: lon, ele });
+      }
+
+      const { distanceKm2d, elevGainPosM } = computeMetrics(coords);
+      const color = pickColor(fileName || trackName);
+      const meta = { year, trackName, bike, linkHref, distanceKm2d, elevGainPosM };
+      return { coords, color, meta, g: null, o: null };
+    }
+
+    /* ===========================
+       Dessin Google / OSM (single route) + interactions
+    ============================ */
+    function drawSingleRouteOnGoogle(route){
+      if (!gmap || route.g) return; // déjà dessiné
+      // Ombre
+      const shadowPolyline = new google.maps.Polyline({
+        path: route.coords, geodesic: true,
+        strokeColor: "#000000", strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight, zIndex: 1
+      });
+      shadowPolyline.setMap(gmap);
+      // Ligne
+      const polyline = new google.maps.Polyline({
+        path: route.coords, geodesic: true,
+        strokeColor: route.color || '#3388ff',
+        strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight, zIndex: 2
+      });
+      polyline.setMap(gmap);
+
+      // Interactions
+      polyline.addListener('mouseover', (e) => {
+        if (gLocked.polyline && gLocked.polyline !== polyline) {
+          gLocked.polyline.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
+          gLocked.shadow.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
+          gLocked.polyline = null; gLocked.shadow = null;
+        }
+        const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
+        const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
+        debouncedHover(route.meta, x, y);
+        polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
+        shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
+      });
+      polyline.addListener('mousemove', (e) => {
+        const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
+        const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
+        debouncedHover(route.meta, x, y);
+      });
+      polyline.addListener('mouseout', () => {
+        hideHoverModal();
+        if (gLocked.polyline !== polyline) {
+          polyline.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
+          shadowPolyline.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
+        }
+      });
+      polyline.addListener('click', () => {
+        if (gLocked.polyline && gLocked.polyline !== polyline) {
+          gLocked.polyline.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
+          gLocked.shadow.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
+        }
+        gLocked.polyline = polyline; gLocked.shadow = shadowPolyline;
+        showFixedModal(route.meta);
+        polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
+        shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
+      });
+
+      route.g = { polyline, shadow: shadowPolyline };
+    }
+
+    function drawSingleRouteOnOSM(route){
+      if (!osmMap || route.o) return; // déjà dessiné
+      const shadow = L.polyline(route.coords.map(p => [p.lat, p.lng]), {
+        color: '#000000', weight: baseShad.weight, opacity: baseShad.opacity
+      }).addTo(osmMap);
+      const line = L.polyline(route.coords.map(p => [p.lat, p.lng]), {
+        color: route.color || '#3388ff', weight: baseMain.weight, opacity: baseMain.opacity
+      }).addTo(osmMap);
+
+      line.on('mouseover', (e) => {
+        if (oLocked.polyline && oLocked.polyline !== line) {
+          oLocked.polyline.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
+          oLocked.shadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
+          oLocked.polyline = null; oLocked.shadow = null;
+        }
+        const ev = e.originalEvent;
+        const x = ev ? ev.clientX : window.innerWidth / 2;
+        const y = ev ? ev.clientY : window.innerHeight / 2;
+        debouncedHover(route.meta, x, y);
+        line.setStyle({ weight: hoverMain.weight, opacity: hoverMain.opacity });
+        shadow.setStyle({ weight: hoverShad.weight, opacity: hoverShad.opacity });
+      });
+
+      line.on('mousemove', (e) => {
+        const ev = e.originalEvent;
+        const x = ev ? ev.clientX : window.innerWidth / 2;
+        const y = ev ? ev.clientY : window.innerHeight / 2;
+        debouncedHover(route.meta, x, y);
+      });
+
+      line.on('mouseout', () => {
+        hideHoverModal();
+        if (oLocked.polyline !== line) {
+          line.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
+          shadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
+        }
+      });
+
+      line.on('click', () => {
+        if (oLocked.polyline && oLocked.polyline !== line) {
+          oLocked.polyline.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
+          oLocked.shadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
+        }
+        oLocked.polyline = line; oLocked.shadow = shadow;
+        showFixedModal(route.meta);
+        line.setStyle({ weight: hoverMain.weight, opacity: hoverMain.opacity });
+        shadow.setStyle({ weight: hoverShad.weight, opacity: hoverShad.opacity });
+      });
+
+      route.o = { line, shadow };
+    }
+
+    /* ===========================
+       Dessins "batch" si besoin
+    ============================ */
+    function drawRoutesOnOSM() {
+      if (!osmMap) return;
+      routesData.forEach(route => { if (!route.o) drawSingleRouteOnOSM(route); });
+    }
+
+    /* ===========================
+       Traces embarquées + rendu
     ============================ */
     function loadAndDrawGpxRoutes() {
       const gpxFiles = [
@@ -438,157 +808,15 @@
         'resources/gpx/25D1.gpx','resources/gpx/25D2.gpx'
       ];
 
-      const colorByPrefix = {
-        '17': '#EB3D4D', '20': '#3D55EB', '21': '#EBA73D', '23': '#82BEEF', '24': '#968759', '25': '#6B5154',
-      };
-
-      let lockedPolyline = null, lockedShadow = null;
-
       gpxFiles.forEach(file => {
         fetch(file).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
         .then(gpxText => {
-          const parser = new DOMParser();
-          const xmlDoc = parser.parseFromString(gpxText, "application/xml");
-
-          const trk = xmlDoc.getElementsByTagName('trk')[0];
-          const nameNode = trk ? trk.getElementsByTagName('name')[0] : null;
-          const yearNode = trk ? trk.getElementsByTagName('year')[0] : null;
-          const bikeNode = trk ? trk.getElementsByTagName('bike')[0] : null;
-          const linkNode = trk ? trk.getElementsByTagName('link')[0] : null;
-
-          const trackName = nameNode ? nameNode.textContent.trim() : 'Trajet';
-          const year = yearNode ? yearNode.textContent.trim() : '';
-          const bike = bikeNode ? bikeNode.textContent.trim() : '';
-          const linkHref = linkNode ? linkNode.getAttribute('href') : '';
-
-          const trkpts = xmlDoc.getElementsByTagName('trkpt');
-          const coords = [];
-          for (let i = 0; i < trkpts.length; i++) {
-            const lat = parseFloat(trkpts[i].getAttribute('lat'));
-            const lon = parseFloat(trkpts[i].getAttribute('lon'));
-            coords.push({ lat, lng: lon });
-          }
-
-          const match = file.match(/\/(\d{2})[^/]*\.gpx$/i);
-          const prefix = match ? match[1] : null;
-          const strokeColor = (prefix && colorByPrefix[prefix]) ? colorByPrefix[prefix] : undefined;
-
-          const meta = { year, trackName, bike, linkHref };
-          routesData.push({ coords, color: strokeColor, meta });
-
-          // Google: ombre + ligne
-          const shadowPolyline = new google.maps.Polyline({
-            path: coords, geodesic: true,
-            strokeColor: "#000000", strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight, zIndex: 1
-          });
-          shadowPolyline.setMap(gmap);
-
-          const polyline = new google.maps.Polyline({
-            path: coords, geodesic: true,
-            ...(strokeColor ? { strokeColor } : {}),
-            strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight, zIndex: 2
-          });
-          polyline.setMap(gmap);
-
-          // Interactions Google
-          polyline.addListener('mouseover', (e) => {
-            if (lockedPolyline && lockedPolyline !== polyline) {
-              lockedPolyline.setOptions({ strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight });
-              lockedShadow.setOptions({ strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight });
-              lockedPolyline = null; lockedShadow = null;
-            }
-            const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
-            const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
-            debouncedHover(meta, x, y);
-            polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
-            shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
-          });
-          polyline.addListener('mousemove', (e) => {
-            const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
-            const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
-            debouncedHover(meta, x, y);
-          });
-          polyline.addListener('mouseout', () => {
-            hideHoverModal();
-            if (lockedPolyline !== polyline) {
-              polyline.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
-              shadowPolyline.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
-            }
-          });
-          polyline.addListener('click', () => {
-            if (lockedPolyline && lockedPolyline !== polyline) {
-              lockedPolyline.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
-              lockedShadow.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
-            }
-            lockedPolyline = polyline; lockedShadow = shadowPolyline;
-            showFixedModal(meta);
-            polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
-            shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
-          });
+          const route = parseGpxToRoute(gpxText, file);
+          routesData.push(route);
+          drawSingleRouteOnGoogle(route);
+          if (osmMap) drawSingleRouteOnOSM(route);
         })
         .catch(err => console.error(`Erreur GPX (${file}):`, err));
-      });
-    }
-
-    /* ===========================
-       Dessin des routes + interactions sur OSM (Leaflet)
-    ============================ */
-    function drawRoutesOnOSM() {
-      if (!osmMap) return;
-
-      let lockedPolyline = null, lockedShadow = null;
-
-      routesData.forEach(route => {
-        // Ombre
-        const shadow = L.polyline(route.coords.map(p => [p.lat, p.lng]), {
-          color: '#000000', weight: baseShad.weight, opacity: baseShad.opacity
-        }).addTo(osmMap);
-
-        // Ligne
-        const line = L.polyline(route.coords.map(p => [p.lat, p.lng]), {
-          color: route.color || '#3388ff', weight: baseMain.weight, opacity: baseMain.opacity
-        }).addTo(osmMap);
-
-        // Interactions OSM (hover + tooltip + clic + lock)
-        line.on('mouseover', (e) => {
-          if (lockedPolyline && lockedPolyline !== line) {
-            lockedPolyline.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
-            lockedShadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
-            lockedPolyline = null; lockedShadow = null;
-          }
-          const ev = e.originalEvent;
-          const x = ev ? ev.clientX : window.innerWidth / 2;
-          const y = ev ? ev.clientY : window.innerHeight / 2;
-          debouncedHover(route.meta, x, y);
-          line.setStyle({ weight: hoverMain.weight, opacity: hoverMain.opacity });
-          shadow.setStyle({ weight: hoverShad.weight, opacity: hoverShad.opacity });
-        });
-
-        line.on('mousemove', (e) => {
-          const ev = e.originalEvent;
-          const x = ev ? ev.clientX : window.innerWidth / 2;
-          const y = ev ? ev.clientY : window.innerHeight / 2;
-          debouncedHover(route.meta, x, y);
-        });
-
-        line.on('mouseout', () => {
-          hideHoverModal();
-          if (lockedPolyline !== line) {
-            line.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
-            shadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
-          }
-        });
-
-        line.on('click', () => {
-          if (lockedPolyline && lockedPolyline !== line) {
-            lockedPolyline.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
-            lockedShadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
-          }
-          lockedPolyline = line; lockedShadow = shadow;
-          showFixedModal(route.meta);
-          line.setStyle({ weight: hoverMain.weight, opacity: hoverMain.opacity });
-          shadow.setStyle({ weight: hoverShad.weight, opacity: hoverShad.opacity });
-        });
       });
     }
   </script>
