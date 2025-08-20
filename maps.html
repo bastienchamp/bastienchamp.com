@@ -36,7 +36,7 @@
       bottom: calc(1.8vh + 12px);      /* même offset que les contrôles */
       width: 25vw;                     /* 1/4 de l’écran */
       background: rgba(255,255,255,0.92);
-      border: 0px solid #E5E5E5;
+      border: 1px solid #E5E5E5;       /* ✅ bordure visible fixe */
       border-radius: 12px;
       padding: 8px;                    /* idem .map-controls .group */
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -50,12 +50,11 @@
       padding-right: 1.5vh;
       font: 400 16px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 
-      /* mêmes animations qu'avant (optionnel) */
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transform: translateY(6px);
-      transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s, border-color .18s ease;
+      transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
     }
     .custom-modal.is-visible {
       opacity: 1;
@@ -171,6 +170,51 @@
 
     // Stockage des routes (pour dessiner aussi sur OSM)
     const routesData = []; // { coords:[{lat,lng}], color:'#hex', meta:{...} }
+
+    // ======== Helpers & UI partagés (Google + OSM) ========
+    const modal = document.getElementById('trackModal');
+    const hoverModal = document.getElementById('hoverModal');
+
+    const baseMain = { weight: 3,  opacity: 1.0 };
+    const hoverMain= { weight: 4.5, opacity: 1.0 };
+    const baseShad = { weight: 5,  opacity: 0.35 };
+    const hoverShad= { weight: 7,  opacity: 0.6 };
+
+    let hoverTimer = null;
+    const HOVER_DELAY = 80;
+
+    const esc = (s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+
+    function showFixedModal(data) {
+      modal.innerHTML = `
+        <div class="modal-header">
+          ${data.year ? `<div class="year">${esc(data.year)}</div>` : `<div class="year"></div>`}
+          <button class="close-x" type="button" aria-label="Fermer">×</button>
+        </div>
+        <div class="title">${esc(data.trackName)}</div>
+        ${data.bike ? `<div class="bike">🏍️ ${esc(data.bike)}</div>` : ''}
+        ${data.linkHref ? `<div class="link"><a href="${esc(data.linkHref)}" target="_blank">Voir l’itinéraire</a></div>` : ''}
+      `;
+      modal.classList.add('is-visible');
+      modal.querySelector('.close-x').onclick = (ev) => { ev.stopPropagation(); closeFixedModal(); };
+    }
+    function closeFixedModal() { modal.classList.remove('is-visible'); }
+
+    function showHoverModalAt(data, x, y) {
+      hoverModal.innerHTML = `
+        ${data.year ? `<div class="year">${esc(data.year)}</div>` : ''}
+        <div class="title">${esc(data.trackName)}</div>
+      `;
+      const offset = 12;
+      hoverModal.style.left = (x + offset) + 'px';
+      hoverModal.style.top  = (y + offset) + 'px';
+      hoverModal.style.display = 'block';
+    }
+    function debouncedHover(data, x, y) {
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(() => showHoverModalAt(data, x, y), HOVER_DELAY);
+    }
+    function hideHoverModal() { clearTimeout(hoverTimer); hoverModal.style.display = 'none'; }
 
     function initMap() {
       // Google Maps (principal)
@@ -334,7 +378,7 @@
           maxZoom: 19,
           attribution: '&copy; OpenStreetMap contributors'
         }).addTo(osmMap);
-        drawRoutesOnOSM();
+        drawRoutesOnOSM(); // ✅ trace + interactions OSM (hover + clic)
       }
 
       const c = gmap.getCenter().toJSON();
@@ -387,58 +431,7 @@
         '17': '#EB3D4D', '20': '#3D55EB', '21': '#EBA73D', '23': '#82BEEF', '24': '#968759', '25': '#6B5154',
       };
 
-      const modal = document.getElementById('trackModal');
-      const hoverModal = document.getElementById('hoverModal');
-
-      let lockedPolyline = null, lockedShadow = null;
-      let hoverTimer = null;
-      const HOVER_DELAY = 80;
-
-      const baseMain = { weight: 3,  opacity: 1.0 };
-      const hoverMain= { weight: 4.5, opacity: 1.0 };
-      const baseShad = { weight: 5,  opacity: 0.35 };
-      const hoverShad= { weight: 7,  opacity: 0.6 };
-
-      const esc = (s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-
-      function showFixedModal(data, borderColor) {
-        modal.innerHTML = `
-          <div class="modal-header">
-            ${data.year ? `<div class="year">${esc(data.year)}</div>` : `<div class="year"></div>`}
-            <button class="close-x" type="button" aria-label="Fermer">×</button>
-          </div>
-          <div class="title">${esc(data.trackName)}</div>
-          ${data.bike ? `<div class="bike">🏍️ ${esc(data.bike)}</div>` : ''}
-          ${data.linkHref ? `<div class="link"><a href="${esc(data.linkHref)}" target="_blank">Voir l’itinéraire</a></div>` : ''}
-        `;
-        // la bordure reprend la couleur du tracé si fournie
-        modal.style.borderColor = borderColor || '#E5E5E5';
-        modal.classList.add('is-visible');
-
-        modal.querySelector('.close-x').onclick = (ev) => {
-          ev.stopPropagation();
-          closeFixedModal();
-        };
-      }
-      function closeFixedModal() {
-        modal.classList.remove('is-visible');
-        // (style des polylines restauré ailleurs)
-      }
-      function showHoverModalAt(data, x, y) {
-        hoverModal.innerHTML = `
-          ${data.year ? `<div class="year">${esc(data.year)}</div>` : ''}
-          <div class="title">${esc(data.trackName)}</div>
-        `;
-        const offset = 12;
-        hoverModal.style.left = (x + offset) + 'px';
-        hoverModal.style.top  = (y + offset) + 'px';
-        hoverModal.style.display = 'block';
-      }
-      function debouncedHover(data, x, y) {
-        clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(() => showHoverModalAt(data, x, y), HOVER_DELAY);
-      }
-      function hideHoverModal() { clearTimeout(hoverTimer); hoverModal.style.display = 'none'; }
+      let lockedPolyline = null, lockedShadow = null; // (Google uniquement)
 
       // Charge & trace pour Google, tout en stockant pour OSM
       gpxFiles.forEach(file => {
@@ -518,7 +511,7 @@
               lockedShadow.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
             }
             lockedPolyline = polyline; lockedShadow = shadowPolyline;
-            showFixedModal(meta, strokeColor || '#E5E5E5');
+            showFixedModal(meta); /* bordure fixe */
             polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
             shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
           });
@@ -528,19 +521,64 @@
     }
 
     /* ===========================
-       Dessin des routes sur OSM (Leaflet)
+       Dessin des routes + interactions sur OSM (Leaflet)
     ============================ */
     function drawRoutesOnOSM() {
       if (!osmMap) return;
+
+      let lockedPolyline = null, lockedShadow = null; // (OSM uniquement)
+
       routesData.forEach(route => {
         // Ombre
-        L.polyline(route.coords.map(p => [p.lat, p.lng]), {
-          color: '#000000', weight: 5, opacity: 0.35
+        const shadow = L.polyline(route.coords.map(p => [p.lat, p.lng]), {
+          color: '#000000', weight: baseShad.weight, opacity: baseShad.opacity
         }).addTo(osmMap);
+
         // Ligne
-        L.polyline(route.coords.map(p => [p.lat, p.lng]), {
-          color: route.color || '#3388ff', weight: 3, opacity: 1.0
+        const line = L.polyline(route.coords.map(p => [p.lat, p.lng]), {
+          color: route.color || '#3388ff', weight: baseMain.weight, opacity: baseMain.opacity
         }).addTo(osmMap);
+
+        // Interactions OSM (hover + tooltip + clic + lock)
+        line.on('mouseover', (e) => {
+          if (lockedPolyline && lockedPolyline !== line) {
+            lockedPolyline.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
+            lockedShadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
+            lockedPolyline = null; lockedShadow = null;
+          }
+          const ev = e.originalEvent;
+          const x = ev ? ev.clientX : window.innerWidth / 2;
+          const y = ev ? ev.clientY : window.innerHeight / 2;
+          debouncedHover(route.meta, x, y);
+          line.setStyle({ weight: hoverMain.weight, opacity: hoverMain.opacity });
+          shadow.setStyle({ weight: hoverShad.weight, opacity: hoverShad.opacity });
+        });
+
+        line.on('mousemove', (e) => {
+          const ev = e.originalEvent;
+          const x = ev ? ev.clientX : window.innerWidth / 2;
+          const y = ev ? ev.clientY : window.innerHeight / 2;
+          debouncedHover(route.meta, x, y);
+        });
+
+        line.on('mouseout', () => {
+          hideHoverModal();
+          if (lockedPolyline !== line) {
+            line.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
+            shadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
+          }
+        });
+
+        line.on('click', () => {
+          if (lockedPolyline && lockedPolyline !== line) {
+            lockedPolyline.setStyle({ weight: baseMain.weight, opacity: baseMain.opacity });
+            lockedShadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
+          }
+          lockedPolyline = line; lockedShadow = shadow;
+          showFixedModal(route.meta); // ✅ même modale que Google
+          line.setStyle({ weight: hoverMain.weight, opacity: hoverMain.opacity });
+          shadow.setStyle({ weight: hoverShad.weight, opacity: hoverShad.opacity });
+        });
       });
     }
   </script>
