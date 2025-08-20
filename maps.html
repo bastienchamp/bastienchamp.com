@@ -29,23 +29,54 @@
     .left-bar   { left: 0; top: 0; bottom: 0;   width:  1.8vh; }
     .right-bar  { right: 0; top: 0; bottom: 0;  width:  1.8vh; }
 
-    /* Modale fixe (clic) */
+    /* Modale fixe (clic) — mêmes styles que les groupes de boutons, largeur 25vw, alignée en bas/gauche */
     .custom-modal {
-      position: fixed; bottom: 6vh; left: 6vh; background: white; padding: 18px 24px;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      z-index: 9999; max-width: 260px; line-height: 1.35; text-align: left;
-      opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(6px);
+      position: fixed;
+      left: calc(1.8vh + 12px);        /* même offset que les contrôles (miroir) */
+      bottom: calc(1.8vh + 12px);      /* même offset que les contrôles */
+      width: 25vw;                     /* 1/4 de l’écran */
+      background: rgba(255,255,255,0.92);
+      border: 0px solid #E5E5E5;
+      border-radius: 12px;
+      padding: 8px;                    /* idem .map-controls .group */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      line-height: 1.35;
+      text-align: left;
+      padding-left: 2vh;
+      padding-bottom: 2vh;
+      padding-top: 1.5vh;
+      padding-right: 1.5vh;
+      font: 400 16px/1.35 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+
+      /* mêmes animations qu'avant (optionnel) */
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(6px);
       transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s, border-color .18s ease;
-      border: 2px solid transparent;
     }
-    .custom-modal.is-visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); transition: opacity .18s, transform .18s, visibility 0s; }
-    .custom-modal .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+    .custom-modal.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: opacity .18s ease, transform .18s ease, visibility 0s;
+    }
+
+    /* Contenu interne de la modale */
+    .custom-modal .modal-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px;
+    }
     .custom-modal .title { font-weight: 600; margin-bottom: 6px; }
     .custom-modal .year { font-size: 14px; }
     .custom-modal .bike { font-size: 14px; margin-top: 4px; margin-bottom: 6px; }
     .custom-modal .link { font-size: 13px; color: #0066cc; word-break: break-all; }
-    .custom-modal .close-x { width: 24px; height: 24px; line-height: 24px; text-align: center; border: none; background: transparent; cursor: pointer; font-size: 18px; color: #666; padding: 0; }
+    .custom-modal .close-x {
+      width: 24px; height: 24px; line-height: 24px; text-align: center;
+      border: none; background: transparent; cursor: pointer; font-size: 18px; color: #666; padding: 0;
+    }
     .custom-modal .close-x:hover { color: #111; }
 
     /* Tooltip (hover) */
@@ -132,7 +163,7 @@
   <script>
     // === Centre & zoom par défaut (identiques pour Google & OSM) ===
     const DEFAULT_CENTER = { lat: 46.774311, lng: 9.204760 };
-    const DEFAULT_ZOOM   = 6.90; // décimal — Leaflet acceptera les décimales grâce à zoomSnap:0
+    const DEFAULT_ZOOM   = 6.90; // Leaflet accepte les décimales avec zoomSnap:0
 
     let gmap = null;          // Google Maps instance
     let osmMap = null;        // Leaflet instance
@@ -225,7 +256,7 @@
         btnSv.setAttribute("aria-pressed", String(next));
       };
 
-      // === Bouton texte Provider (entre SV et Calques) ===
+      // Bouton texte Provider (entre SV et Calques)
       const btnProvider = document.createElement("button");
       btnProvider.className = "map-btn label";
       btnProvider.title = "Basculer fournisseur de carte (OSM / Google)";
@@ -292,32 +323,27 @@
       const mapGoogleEl = document.getElementById('map-google');
       const mapOsmEl    = document.getElementById('map-osm');
 
-      // Crée la map OSM si besoin (avec zoomSnap:0 pour respecter les décimales)
       if (!osmMap) {
         osmMap = L.map('map-osm', {
           zoomControl: false,
           attributionControl: true,
-          zoomSnap: 0,        // ✅ autorise les zooms décimaux
+          zoomSnap: 0,
           zoomDelta: 0.25
         });
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '&copy; OpenStreetMap contributors'
         }).addTo(osmMap);
-        // Tracer les routes déjà connues
         drawRoutesOnOSM();
       }
 
-      // Synchronise vue (même zoom exact que Google)
       const c = gmap.getCenter().toJSON();
       const z = gmap.getZoom() ?? DEFAULT_ZOOM;
       osmMap.setView([c.lat, c.lng], z);
 
-      // Affiche OSM, cache Google (sans display:none)
       mapGoogleEl.classList.remove('is-visible'); mapGoogleEl.classList.add('is-hidden');
       mapOsmEl.classList.remove('is-hidden');     mapOsmEl.classList.add('is-visible');
 
-      // Laisse le DOM se peindre, puis invalide la taille de Leaflet
       await new Promise(requestAnimationFrame);
       osmMap.invalidateSize(true);
 
@@ -334,12 +360,10 @@
         gmap.setCenter({ lat: c.lat, lng: c.lng });
         gmap.setZoom(z);
       } else {
-        // Au cas où OSM n'a jamais été créé, on reste sur les valeurs par défaut
         gmap.setCenter(DEFAULT_CENTER);
         gmap.setZoom(DEFAULT_ZOOM);
       }
 
-      // Affiche Google, cache OSM
       mapOsmEl.classList.remove('is-visible');  mapOsmEl.classList.add('is-hidden');
       mapGoogleEl.classList.remove('is-hidden'); mapGoogleEl.classList.add('is-visible');
 
@@ -387,17 +411,18 @@
           ${data.bike ? `<div class="bike">🏍️ ${esc(data.bike)}</div>` : ''}
           ${data.linkHref ? `<div class="link"><a href="${esc(data.linkHref)}" target="_blank">Voir l’itinéraire</a></div>` : ''}
         `;
-        modal.style.borderColor = borderColor || '#cccccc';
+        // la bordure reprend la couleur du tracé si fournie
+        modal.style.borderColor = borderColor || '#E5E5E5';
         modal.classList.add('is-visible');
-        modal.querySelector('.close-x').onclick = (ev) => { ev.stopPropagation(); closeFixedModal(); };
+
+        modal.querySelector('.close-x').onclick = (ev) => {
+          ev.stopPropagation();
+          closeFixedModal();
+        };
       }
       function closeFixedModal() {
         modal.classList.remove('is-visible');
-        if (lockedPolyline && lockedShadow) {
-          lockedPolyline.setOptions({ strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight });
-          lockedShadow.setOptions({ strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight });
-        }
-        lockedPolyline = null; lockedShadow = null;
+        // (style des polylines restauré ailleurs)
       }
       function showHoverModalAt(data, x, y) {
         hoverModal.innerHTML = `
@@ -493,7 +518,7 @@
               lockedShadow.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
             }
             lockedPolyline = polyline; lockedShadow = shadowPolyline;
-            showFixedModal(meta, strokeColor || '#cccccc');
+            showFixedModal(meta, strokeColor || '#E5E5E5');
             polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
             shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
           });
