@@ -4,99 +4,118 @@
   <meta charset="utf-8">
   <title>bastienchamp.com</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet (pour OpenStreetMap) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
   <style>
     html, body { height: 100%; margin: 0; padding: 0; background: #FAFAFA; }
-    #map { height: calc(100vh); width: 100%; }
-    .bottom-bar, .top-bar, .left-bar, .right-bar { position: fixed; background: #FFFFFF; }
-    .bottom-bar { left: 0; right: 0; bottom: 0; height: 2.25vh; }
-    .top-bar { left: 0; right: 0; top: 0; height: 2.25vh; }
-    .left-bar { left: 0; top: 0; bottom: 0; width: 2.25vh; }
-    .right-bar { right: 0; top: 0; bottom: 0; width: 2.25vh; }
 
-    /* Modale fixe — en bas à gauche (clic) */
+    /* Deux calques carte superposés (évite display:none pour Leaflet) */
+    .map-layer {
+      position: absolute; inset: 0; width: 100%; height: 100vh; z-index: 0;
+    }
+    #map-google.map-layer { z-index: 1; }
+    #map-osm.map-layer    { z-index: 0; }
+
+    .is-hidden  { visibility: hidden; opacity: 0; pointer-events: none; }
+    .is-visible { visibility: visible; opacity: 1; pointer-events: auto; }
+
+    /* Barres fixes — toujours au-dessus des calques de carte */
+    .bottom-bar, .top-bar, .left-bar, .right-bar { position: fixed; background: #FFFFFF; z-index: 9996; }
+    .bottom-bar { left: 0; right: 0; bottom: 0; height: 1.8vh; }
+    .top-bar    { left: 0; right: 0; top: 0;    height: 1.8vh; }
+    .left-bar   { left: 0; top: 0; bottom: 0;   width:  1.8vh; }
+    .right-bar  { right: 0; top: 0; bottom: 0;  width:  1.8vh; }
+
+    /* Modale fixe (clic) */
     .custom-modal {
-      position: fixed;
-      bottom: 6vh;
-      left: 6vh;
-      background: white;
-      padding: 18px 24px; /* plus de bouton bas → padding normal */
+      position: fixed; bottom: 6vh; left: 6vh; background: white; padding: 18px 24px;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 15px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      z-index: 9999;
-      max-width: 260px;
-      line-height: 1.35;
-      text-align: left;
-
-      /* Fade-in / out */
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: translateY(6px);
+      font-size: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 9999; max-width: 260px; line-height: 1.35; text-align: left;
+      opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(6px);
       transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s, border-color .18s ease;
-
-      border: 2px solid transparent; /* mis à jour dynamiquement avec la couleur du trajet */
+      border: 2px solid transparent;
     }
-    .custom-modal.is-visible {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateY(0);
-      transition: opacity .18s ease, transform .18s ease, visibility 0s;
-    }
-
-    /* Ligne du header (year + croix) */
-    .custom-modal .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 6px;
-    }
-
+    .custom-modal.is-visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); transition: opacity .18s, transform .18s, visibility 0s; }
+    .custom-modal .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
     .custom-modal .title { font-weight: 600; margin-bottom: 6px; }
     .custom-modal .year { font-size: 14px; }
     .custom-modal .bike { font-size: 14px; margin-top: 4px; margin-bottom: 6px; }
     .custom-modal .link { font-size: 13px; color: #0066cc; word-break: break-all; }
-
-    /* Croix de fermeture en haut-droite (alignée avec year) */
-    .custom-modal .close-x {
-      width: 24px; height: 24px;
-      line-height: 24px;
-      text-align: center;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-size: 18px;
-      color: #666;
-      padding: 0;
-    }
+    .custom-modal .close-x { width: 24px; height: 24px; line-height: 24px; text-align: center; border: none; background: transparent; cursor: pointer; font-size: 18px; color: #666; padding: 0; }
     .custom-modal .close-x:hover { color: #111; }
 
-    /* Tooltip (hover) — près du curseur, sans bike ni link */
+    /* Tooltip (hover) */
     .hover-modal {
-      display: none;
-      position: fixed;
-      background: white;
-      padding: 10px 12px;
+      display: none; position: fixed; background: white; padding: 10px 12px;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 13.5px;
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-      z-index: 10000;
-      max-width: 260px;
-      line-height: 1.35;
-      text-align: left;
-      pointer-events: none;
+      font-size: 13.5px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 10000; max-width: 260px; line-height: 1.35; text-align: left; pointer-events: none;
     }
     .hover-modal .title { font-weight: 600; margin-top: 2px; }
-    .hover-modal .year { opacity: 0.9; }
+    .hover-modal .year  { opacity: 0.9; }
+
+    /* ===========================
+       Styles des boutons custom
+       =========================== */
+    .map-controls {
+      position: fixed;
+      right: calc(1.8vh + 12px);       /* aligne avec .right-bar */
+      bottom: calc(1.8vh + 12px);      /* aligne avec .bottom-bar */
+      z-index: 9998;
+      display: flex; flex-direction: row; align-items: flex-end; gap: 10px;
+      background: transparent; padding: 0; white-space: nowrap;
+    }
+    .map-controls .group {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid #E5E5E5; border-radius: 12px; padding: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12); backdrop-filter: blur(6px);
+      flex: 0 0 auto; width: auto;
+    }
+    .group-zoom { width: auto; }
+
+    .map-btn {
+      appearance: none; border: 1px solid #E5E5E5; background: #fff; border-radius: 10px;
+      width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center;
+      font: 600 16px/1 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: box-shadow .15s ease, transform .08s ease, border-color .15s ease, background .15s ease;
+      user-select: none;
+    }
+    .map-btn:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.14); }
+    .map-btn:active { transform: translateY(1px); }
+    .map-btn.is-on { border-color: #3D55EB; box-shadow: 0 0 0 3px rgba(61,85,235,0.15); }
+    .map-btn.is-disabled, .map-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Bouton texte (sélecteur provider) */
+    .map-btn.label {
+      width: auto; height: 38px; padding: 0 12px;
+      font-size: 13px; font-weight: 600; letter-spacing: .2px;
+    }
+
+    .map-btn svg { width: 18px; height: 18px; display: block; }
+
+    .map-select {
+      border: 1px solid #E5E5E5; background: #fff; border-radius: 10px; height: 38px;
+      padding: 0 12px; padding-right: 26px;   /* espace pour le chevron */
+      font: 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    .map-select:hover  { box-shadow: 0 4px 10px rgba(0,0,0,0.14); }
+    .map-select:disabled { opacity: .6; cursor: not-allowed; }
   </style>
 </head>
 
 <body>
-  <div id="map"></div>
+  <!-- Deux conteneurs carte superposés -->
+  <div id="map-google" class="map-layer is-visible"></div>
+  <div id="map-osm"    class="map-layer is-hidden"></div>
+
   <div class="bottom-bar"></div>
   <div class="top-bar"></div>
   <div class="left-bar"></div>
@@ -107,33 +126,230 @@
   <!-- Tooltip (hover) -->
   <div id="hoverModal" class="hover-modal"></div>
 
+  <!-- Overlay fixe pour les contrôles -->
+  <div id="customControls" class="map-controls" aria-label="Contrôles de la carte"></div>
+
   <script>
+    // === Centre & zoom par défaut (identiques pour Google & OSM) ===
+    const DEFAULT_CENTER = { lat: 46.774311, lng: 9.204760 };
+    const DEFAULT_ZOOM   = 6.90; // décimal — Leaflet acceptera les décimales grâce à zoomSnap:0
+
+    let gmap = null;          // Google Maps instance
+    let osmMap = null;        // Leaflet instance
+    let currentProvider = 'google';
+
+    // Stockage des routes (pour dessiner aussi sur OSM)
+    const routesData = []; // { coords:[{lat,lng}], color:'#hex', meta:{...} }
+
     function initMap() {
-      const position = { lat: 46.774311, lng: 9.204760 };
+      // Google Maps (principal)
+      gmap = new google.maps.Map(document.getElementById("map-google"), {
+        zoom: DEFAULT_ZOOM,
+        center: DEFAULT_CENTER,
+        disableDefaultUI: true,
+        zoomControl: false,
+        streetViewControl: false,
+        keyboardShortcuts: false,
+        gestureHandling: "greedy",
+        minZoom: 4,
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        mapTypeControl: false,
+        styles: [
+          { featureType: "road", elementType: "labels", stylers: [{ visibility: "off" }] },
+          { featureType: "road", elementType: "labels.icon", stylers: [{ visibility: "off" }] },
+          { featureType: "road.highway", elementType: "labels", stylers: [{ visibility: "off" }] },
+          { featureType: "road.highway", elementType: "labels.icon", stylers: [{ visibility: "off" }] }
+        ]
+      });
 
-const map = new google.maps.Map(document.getElementById("map"), {
-  zoom: 6.70,
-  center: position,
-  disableDefaultUI: true,
-  zoomControl: true,
-  keyboardShortcuts: false,
-  gestureHandling: "greedy",
-  minZoom: 4,
+      setupCustomControls();   // barre de contrôles
+      loadAndDrawGpxRoutes();  // trace les GPX sur Google et mémorise pour OSM
+    }
 
-  // ✅ styles doit être un tableau, avec "stylers"
-  styles: [
-    // cacher tous les labels (texte) des routes
-    { featureType: "road", elementType: "labels", stylers: [{ visibility: "off" }] },
-    // cacher les icônes de routes (ex: numéros d’autoroute)
-    { featureType: "road", elementType: "labels.icon", stylers: [{ visibility: "off" }] },
+    /* ===========================
+       Contrôles custom
+    ============================ */
+    function setupCustomControls() {
+      const controlsRoot = document.getElementById("customControls");
 
-    // redondance ciblée pour les autoroutes (utile selon les régions)
-    { featureType: "road.highway", elementType: "labels", stylers: [{ visibility: "off" }] },
-    { featureType: "road.highway", elementType: "labels.icon", stylers: [{ visibility: "off" }] }
-  ]
-});
-      
+      // Groupe Zoom (à gauche)
+      const grpZoom = document.createElement("div");
+      grpZoom.className = "group group-zoom";
 
+      const btnPlus = document.createElement("button");
+      btnPlus.className = "map-btn";
+      btnPlus.title = "Zoomer";
+      btnPlus.setAttribute("aria-label", "Zoom in");
+      btnPlus.textContent = "+";
+      btnPlus.onclick = () => setZoom(getZoom() + 1);
+
+      const btnMinus = document.createElement("button");
+      btnMinus.className = "map-btn";
+      btnMinus.title = "Dézoomer";
+      btnMinus.setAttribute("aria-label", "Zoom out");
+      btnMinus.textContent = "–";
+      btnMinus.onclick = () => setZoom(getZoom() - 1);
+
+      grpZoom.appendChild(btnPlus);
+      grpZoom.appendChild(btnMinus);
+
+      // Groupe Outils (à droite)
+      const grpTools = document.createElement("div");
+      grpTools.className = "group group-tools";
+
+      // Street View (Google uniquement)
+      const btnSv = document.createElement("button");
+      btnSv.className = "map-btn";
+      btnSv.title = "Activer/Désactiver Street View";
+      btnSv.setAttribute("aria-pressed", "false");
+      btnSv.innerHTML = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="6" r="3" fill="#F4B400"/>
+          <rect x="10.2" y="9" width="3.6" height="6.5" rx="1.2" fill="#F4B400"/>
+          <rect x="6.8" y="9.5" width="3" height="2" rx="1" transform="rotate(20 8.3 10.5)" fill="#F4B400"/>
+          <rect x="14.2" y="9.5" width="3" height="2" rx="1" transform="rotate(-20 15.7 10.5)" fill="#F4B400"/>
+          <rect x="10.4" y="15.8" width="1.4" height="4.2" rx="0.7" fill="#F4B400"/>
+          <rect x="12.2" y="15.8" width="1.4" height="4.2" rx="0.7" fill="#F4B400"/>
+        </svg>
+      `;
+      btnSv.onclick = () => {
+        if (currentProvider !== 'google') return; // SV indispo en OSM
+        const sv = gmap.getStreetView();
+        const next = !sv.getVisible();
+        if (next) {
+          sv.setPosition(gmap.getCenter());
+          sv.setPov({ heading: 0, pitch: 0 });
+        }
+        sv.setVisible(next);
+        btnSv.classList.toggle("is-on", next);
+        btnSv.setAttribute("aria-pressed", String(next));
+      };
+
+      // === Bouton texte Provider (entre SV et Calques) ===
+      const btnProvider = document.createElement("button");
+      btnProvider.className = "map-btn label";
+      btnProvider.title = "Basculer fournisseur de carte (OSM / Google)";
+      btnProvider.textContent = "Google Maps"; // Google actif par défaut
+
+      // Sélecteur de calque (Google uniquement)
+      const selectType = document.createElement("select");
+      selectType.className = "map-select";
+      [
+        ["roadmap", "Plan"],
+        ["satellite", "Satellite"],
+        ["hybrid", "Hybride"],
+        ["terrain", "Relief"]
+      ].forEach(([value, label]) => {
+        const opt = document.createElement("option");
+        opt.value = value; opt.textContent = label;
+        if (value === "terrain") opt.selected = true;
+        selectType.appendChild(opt);
+      });
+      selectType.onchange = (e) => {
+        if (currentProvider === 'google') gmap.setMapTypeId(e.target.value);
+      };
+
+      // Assemblage
+      grpTools.appendChild(btnSv);
+      grpTools.appendChild(btnProvider);
+      grpTools.appendChild(selectType);
+
+      controlsRoot.appendChild(grpZoom);
+      controlsRoot.appendChild(grpTools);
+
+      // Toggle provider
+      btnProvider.onclick = () => {
+        if (currentProvider === 'google') {
+          useOpenStreetMap().then(() => {
+            btnProvider.textContent = "OpenStreetMap";
+            selectType.disabled = true;
+            btnSv.classList.add("is-disabled");
+            const sv = gmap.getStreetView(); sv.setVisible(false);
+            btnSv.classList.remove("is-on");
+            btnSv.setAttribute("aria-pressed", "false");
+          });
+        } else {
+          useGoogleMaps();
+          btnProvider.textContent = "Google Maps";
+          selectType.disabled = false;
+          btnSv.classList.remove("is-disabled");
+        }
+      };
+    }
+
+    function getZoom() {
+      return currentProvider === 'google' ? gmap.getZoom() : (osmMap ? osmMap.getZoom() : DEFAULT_ZOOM);
+    }
+    function setZoom(z) {
+      if (currentProvider === 'google') gmap.setZoom(z);
+      else if (osmMap) osmMap.setZoom(z);
+    }
+
+    /* ===========================
+       Basculer OSM / Google
+    ============================ */
+    async function useOpenStreetMap() {
+      const mapGoogleEl = document.getElementById('map-google');
+      const mapOsmEl    = document.getElementById('map-osm');
+
+      // Crée la map OSM si besoin (avec zoomSnap:0 pour respecter les décimales)
+      if (!osmMap) {
+        osmMap = L.map('map-osm', {
+          zoomControl: false,
+          attributionControl: true,
+          zoomSnap: 0,        // ✅ autorise les zooms décimaux
+          zoomDelta: 0.25
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(osmMap);
+        // Tracer les routes déjà connues
+        drawRoutesOnOSM();
+      }
+
+      // Synchronise vue (même zoom exact que Google)
+      const c = gmap.getCenter().toJSON();
+      const z = gmap.getZoom() ?? DEFAULT_ZOOM;
+      osmMap.setView([c.lat, c.lng], z);
+
+      // Affiche OSM, cache Google (sans display:none)
+      mapGoogleEl.classList.remove('is-visible'); mapGoogleEl.classList.add('is-hidden');
+      mapOsmEl.classList.remove('is-hidden');     mapOsmEl.classList.add('is-visible');
+
+      // Laisse le DOM se peindre, puis invalide la taille de Leaflet
+      await new Promise(requestAnimationFrame);
+      osmMap.invalidateSize(true);
+
+      currentProvider = 'osm';
+    }
+
+    function useGoogleMaps() {
+      const mapGoogleEl = document.getElementById('map-google');
+      const mapOsmEl    = document.getElementById('map-osm');
+
+      if (osmMap) {
+        const c = osmMap.getCenter();
+        const z = osmMap.getZoom();
+        gmap.setCenter({ lat: c.lat, lng: c.lng });
+        gmap.setZoom(z);
+      } else {
+        // Au cas où OSM n'a jamais été créé, on reste sur les valeurs par défaut
+        gmap.setCenter(DEFAULT_CENTER);
+        gmap.setZoom(DEFAULT_ZOOM);
+      }
+
+      // Affiche Google, cache OSM
+      mapOsmEl.classList.remove('is-visible');  mapOsmEl.classList.add('is-hidden');
+      mapGoogleEl.classList.remove('is-hidden'); mapGoogleEl.classList.add('is-visible');
+
+      currentProvider = 'google';
+    }
+
+    /* ===========================
+       Chargement & tracé GPX (Google + mémoire pour OSM)
+    ============================ */
+    function loadAndDrawGpxRoutes() {
       const gpxFiles = [
         'resources/gpx/17D1.gpx','resources/gpx/17D2.gpx','resources/gpx/17D3.gpx','resources/gpx/17D4.gpx','resources/gpx/17D5.gpx','resources/gpx/17D6.gpx','resources/gpx/17D7.gpx',
         'resources/gpx/20D1.gpx','resources/gpx/20D2.gpx','resources/gpx/20D3.gpx','resources/gpx/20D4.gpx',
@@ -150,31 +366,17 @@ const map = new google.maps.Map(document.getElementById("map"), {
       const modal = document.getElementById('trackModal');
       const hoverModal = document.getElementById('hoverModal');
 
-      // État de lock (modale fixe)
       let lockedPolyline = null, lockedShadow = null;
-
-      // Styles
-      const baseMain = { weight: 3,  opacity: 1.0 };
-      const hoverMain= { weight: 4.5,  opacity: 1.0 };
-      const baseShad = { weight: 5,  opacity: 0.35 };
-      const hoverShad= { weight: 7, opacity: 0.6 };
-
-      // Debounce
       let hoverTimer = null;
       const HOVER_DELAY = 80;
 
+      const baseMain = { weight: 3,  opacity: 1.0 };
+      const hoverMain= { weight: 4.5, opacity: 1.0 };
+      const baseShad = { weight: 5,  opacity: 0.35 };
+      const hoverShad= { weight: 7,  opacity: 0.6 };
+
       const esc = (s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
-      function renderContent({ year, trackName, bike, linkHref, includeLink, includeBike }) {
-        return `
-          ${year ? `<div class="year">${esc(year)}</div>` : ''}
-          <div class="title">${esc(trackName)}</div>
-          ${includeBike && bike ? `<div class="bike">🏍️ ${esc(bike)}</div>` : ''}
-          ${includeLink && linkHref ? `<div class="link"><a href="${esc(linkHref)}" target="_blank">Voir l’itinéraire</a></div>` : ''}
-        `;
-      }
-
-      // === CHANGÉ : croix en haut, fade-in/out, bordure couleur trajet ===
       function showFixedModal(data, borderColor) {
         modal.innerHTML = `
           <div class="modal-header">
@@ -187,25 +389,17 @@ const map = new google.maps.Map(document.getElementById("map"), {
         `;
         modal.style.borderColor = borderColor || '#cccccc';
         modal.classList.add('is-visible');
-
-        const closeBtn = modal.querySelector('.close-x');
-        closeBtn.onclick = (ev) => {
-          ev.stopPropagation();
-          closeFixedModal();
-        };
+        modal.querySelector('.close-x').onclick = (ev) => { ev.stopPropagation(); closeFixedModal(); };
       }
-
       function closeFixedModal() {
         modal.classList.remove('is-visible');
-        // Restaure le style si une ligne est lockée
         if (lockedPolyline && lockedShadow) {
-          applyBaseStyle(lockedPolyline, lockedShadow);
+          lockedPolyline.setOptions({ strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight });
+          lockedShadow.setOptions({ strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight });
         }
         lockedPolyline = null; lockedShadow = null;
       }
-
       function showHoverModalAt(data, x, y) {
-        // Tooltip hover : pas de bike, pas de link
         hoverModal.innerHTML = `
           ${data.year ? `<div class="year">${esc(data.year)}</div>` : ''}
           <div class="title">${esc(data.trackName)}</div>
@@ -221,19 +415,10 @@ const map = new google.maps.Map(document.getElementById("map"), {
       }
       function hideHoverModal() { clearTimeout(hoverTimer); hoverModal.style.display = 'none'; }
 
-      function applyHoverStyle(poly, shad) {
-        poly.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
-        shad.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
-      }
-      function applyBaseStyle(poly, shad) {
-        poly.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
-        shad.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
-      }
-
+      // Charge & trace pour Google, tout en stockant pour OSM
       gpxFiles.forEach(file => {
-        fetch(file).then(r => {
-          if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text();
-        }).then(gpxText => {
+        fetch(file).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
+        .then(gpxText => {
           const parser = new DOMParser();
           const xmlDoc = parser.parseFromString(gpxText, "application/xml");
 
@@ -260,57 +445,82 @@ const map = new google.maps.Map(document.getElementById("map"), {
           const prefix = match ? match[1] : null;
           const strokeColor = (prefix && colorByPrefix[prefix]) ? colorByPrefix[prefix] : undefined;
 
-          // Ombre
+          const meta = { year, trackName, bike, linkHref };
+          routesData.push({ coords, color: strokeColor, meta });
+
+          // Google: ombre + ligne
           const shadowPolyline = new google.maps.Polyline({
             path: coords, geodesic: true,
             strokeColor: "#000000", strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight, zIndex: 1
           });
-          shadowPolyline.setMap(map);
+          shadowPolyline.setMap(gmap);
 
-          // Ligne
           const polyline = new google.maps.Polyline({
             path: coords, geodesic: true,
             ...(strokeColor ? { strokeColor } : {}),
             strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight, zIndex: 2
           });
-          polyline.setMap(map);
+          polyline.setMap(gmap);
 
-          const data = { year, trackName, bike, linkHref };
-
-          // Hover
+          // Interactions Google
           polyline.addListener('mouseover', (e) => {
             if (lockedPolyline && lockedPolyline !== polyline) {
-              applyBaseStyle(lockedPolyline, lockedShadow);
+              lockedPolyline.setOptions({ strokeOpacity: baseMain.opacity, strokeWeight: baseMain.weight });
+              lockedShadow.setOptions({ strokeOpacity: baseShad.opacity, strokeWeight: baseShad.weight });
               lockedPolyline = null; lockedShadow = null;
             }
             const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
             const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
-            debouncedHover(data, x, y);
-            applyHoverStyle(polyline, shadowPolyline);
+            debouncedHover(meta, x, y);
+            polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
+            shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
           });
           polyline.addListener('mousemove', (e) => {
             const x = e.domEvent ? e.domEvent.clientX : window.innerWidth/2;
             const y = e.domEvent ? e.domEvent.clientY : window.innerHeight/2;
-            debouncedHover(data, x, y);
+            debouncedHover(meta, x, y);
           });
           polyline.addListener('mouseout', () => {
             hideHoverModal();
-            if (lockedPolyline !== polyline) applyBaseStyle(polyline, shadowPolyline);
+            if (lockedPolyline !== polyline) {
+              polyline.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
+              shadowPolyline.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
+            }
           });
-
-          // Clic (modale fixe + lock) — bordure = couleur du trajet
           polyline.addListener('click', () => {
-            if (lockedPolyline && lockedPolyline !== polyline) applyBaseStyle(lockedPolyline, lockedShadow);
+            if (lockedPolyline && lockedPolyline !== polyline) {
+              lockedPolyline.setOptions({ strokeWeight: baseMain.weight, strokeOpacity: baseMain.opacity });
+              lockedShadow.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
+            }
             lockedPolyline = polyline; lockedShadow = shadowPolyline;
-            showFixedModal(data, strokeColor || '#cccccc');
-            applyHoverStyle(polyline, shadowPolyline);
+            showFixedModal(meta, strokeColor || '#cccccc');
+            polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
+            shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
           });
+        })
+        .catch(err => console.error(`Erreur GPX (${file}):`, err));
+      });
+    }
 
-        }).catch(err => console.error(`Erreur GPX (${file}):`, err));
+    /* ===========================
+       Dessin des routes sur OSM (Leaflet)
+    ============================ */
+    function drawRoutesOnOSM() {
+      if (!osmMap) return;
+      routesData.forEach(route => {
+        // Ombre
+        L.polyline(route.coords.map(p => [p.lat, p.lng]), {
+          color: '#000000', weight: 5, opacity: 0.35
+        }).addTo(osmMap);
+        // Ligne
+        L.polyline(route.coords.map(p => [p.lat, p.lng]), {
+          color: route.color || '#3388ff', weight: 3, opacity: 1.0
+        }).addTo(osmMap);
       });
     }
   </script>
 
+  <!-- Google Maps JS API -->
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-pBG0rqLOKQWGkhIjjHHoDIWbwimusJE&callback=initMap"></script>
 </body>
 </html>
