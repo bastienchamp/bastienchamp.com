@@ -32,13 +32,13 @@
     /* Modale fixe (clic) — mêmes styles que les groupes de boutons, largeur 25vw, alignée en bas/gauche */
     .custom-modal {
       position: fixed;
-      left: calc(1.8vh + 12px);        /* même offset que les contrôles (miroir) */
-      bottom: calc(1.8vh + 12px);      /* même offset que les contrôles */
-      width: 25vw;                     /* 1/4 de l’écran */
+      left: calc(1.8vh + 12px);
+      bottom: calc(1.8vh + 12px);
+      width: 25vw;
       background: rgba(255,255,255,0.92);
-      border: 1px solid #E5E5E5;       /* ✅ bordure visible fixe */
+      border: 1px solid #E5E5E5;
       border-radius: 12px;
-      padding: 8px;                    /* idem .map-controls .group */
+      padding: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       backdrop-filter: blur(6px);
       z-index: 9999;
@@ -93,8 +93,8 @@
        =========================== */
     .map-controls {
       position: fixed;
-      right: calc(1.8vh + 12px);       /* aligne avec .right-bar */
-      bottom: calc(1.8vh + 12px);      /* aligne avec .bottom-bar */
+      right: calc(1.8vh + 12px);
+      bottom: calc(1.8vh + 12px);
       z-index: 9998;
       display: flex; flex-direction: row; align-items: flex-end; gap: 10px;
       background: transparent; padding: 0; white-space: nowrap;
@@ -129,13 +129,24 @@
 
     .map-btn svg { width: 18px; height: 18px; display: block; }
 
+    /* Select calques sans chevron */
     .map-select {
       border: 1px solid #E5E5E5; background: #fff; border-radius: 10px; height: 38px;
-      padding: 0 12px; padding-right: 26px;   /* espace pour le chevron */
+      padding: 0 12px; /* plus d'espace chevron */
       font: 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       transition: box-shadow .15s ease, border-color .15s ease;
+
+      /* ✅ supprimer le chevron natif (cross-browser) */
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: none !important;
+      background-color: #fff;
     }
+    /* Edge/IE (au cas où) */
+    .map-select::-ms-expand { display: none; }
+
     .map-select:hover  { box-shadow: 0 4px 10px rgba(0,0,0,0.14); }
     .map-select:disabled { opacity: .6; cursor: not-allowed; }
   </style>
@@ -162,7 +173,7 @@
   <script>
     // === Centre & zoom par défaut (identiques pour Google & OSM) ===
     const DEFAULT_CENTER = { lat: 46.774311, lng: 9.204760 };
-    const DEFAULT_ZOOM   = 6.90; // Leaflet accepte les décimales avec zoomSnap:0
+    const DEFAULT_ZOOM   = 6.90;
 
     let gmap = null;          // Google Maps instance
     let osmMap = null;        // Leaflet instance
@@ -171,7 +182,7 @@
     // Stockage des routes (pour dessiner aussi sur OSM)
     const routesData = []; // { coords:[{lat,lng}], color:'#hex', meta:{...} }
 
-    // ======== Helpers & UI partagés (Google + OSM) ========
+    // UI partagée
     const modal = document.getElementById('trackModal');
     const hoverModal = document.getElementById('hoverModal');
 
@@ -237,8 +248,8 @@
         ]
       });
 
-      setupCustomControls();   // barre de contrôles
-      loadAndDrawGpxRoutes();  // trace les GPX sur Google et mémorise pour OSM
+      setupCustomControls();
+      loadAndDrawGpxRoutes();
     }
 
     /* ===========================
@@ -288,7 +299,7 @@
         </svg>
       `;
       btnSv.onclick = () => {
-        if (currentProvider !== 'google') return; // SV indispo en OSM
+        if (currentProvider !== 'google') return;
         const sv = gmap.getStreetView();
         const next = !sv.getVisible();
         if (next) {
@@ -304,7 +315,7 @@
       const btnProvider = document.createElement("button");
       btnProvider.className = "map-btn label";
       btnProvider.title = "Basculer fournisseur de carte (OSM / Google)";
-      btnProvider.textContent = "Google Maps"; // Google actif par défaut
+      btnProvider.textContent = "Google Maps";
 
       // Sélecteur de calque (Google uniquement)
       const selectType = document.createElement("select");
@@ -378,7 +389,7 @@
           maxZoom: 19,
           attribution: '&copy; OpenStreetMap contributors'
         }).addTo(osmMap);
-        drawRoutesOnOSM(); // ✅ trace + interactions OSM (hover + clic)
+        drawRoutesOnOSM();
       }
 
       const c = gmap.getCenter().toJSON();
@@ -431,9 +442,8 @@
         '17': '#EB3D4D', '20': '#3D55EB', '21': '#EBA73D', '23': '#82BEEF', '24': '#968759', '25': '#6B5154',
       };
 
-      let lockedPolyline = null, lockedShadow = null; // (Google uniquement)
+      let lockedPolyline = null, lockedShadow = null;
 
-      // Charge & trace pour Google, tout en stockant pour OSM
       gpxFiles.forEach(file => {
         fetch(file).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
         .then(gpxText => {
@@ -511,7 +521,7 @@
               lockedShadow.setOptions({ strokeWeight: baseShad.weight, strokeOpacity: baseShad.opacity });
             }
             lockedPolyline = polyline; lockedShadow = shadowPolyline;
-            showFixedModal(meta); /* bordure fixe */
+            showFixedModal(meta);
             polyline.setOptions({ strokeWeight: hoverMain.weight, strokeOpacity: hoverMain.opacity });
             shadowPolyline.setOptions({ strokeWeight: hoverShad.weight, strokeOpacity: hoverShad.opacity });
           });
@@ -526,7 +536,7 @@
     function drawRoutesOnOSM() {
       if (!osmMap) return;
 
-      let lockedPolyline = null, lockedShadow = null; // (OSM uniquement)
+      let lockedPolyline = null, lockedShadow = null;
 
       routesData.forEach(route => {
         // Ombre
@@ -575,7 +585,7 @@
             lockedShadow.setStyle({ weight: baseShad.weight, opacity: baseShad.opacity });
           }
           lockedPolyline = line; lockedShadow = shadow;
-          showFixedModal(route.meta); // ✅ même modale que Google
+          showFixedModal(route.meta);
           line.setStyle({ weight: hoverMain.weight, opacity: hoverMain.opacity });
           shadow.setStyle({ weight: hoverShad.weight, opacity: hoverShad.opacity });
         });
