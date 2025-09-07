@@ -1,0 +1,19 @@
+{
+  "version": 2,
+
+  "build": {
+    "output": "build"
+  },
+
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs20.x",
+      "includeFiles": "api/gpx/**"
+    }
+  },
+
+"rewrites": [
+  { "source": "/gpx/:path*", "destination": "/api/index.js" },
+  { "source": "/api/:path*", "destination": "/api/index.js" }
+]
+}

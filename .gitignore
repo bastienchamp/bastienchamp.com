@@ -1,0 +1,5 @@
+.vercel/
+.env
+node_modules/
+api/gpx/
+package-lock.json
