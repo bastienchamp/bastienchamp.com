@@ -194,6 +194,13 @@
   </style>
 </head>
 
+<script>
+  window.API_BASE =
+    location.hostname === '127.0.0.1' ? 'http://127.0.0.1:3000' : 'https://bastienchamp.com.vercel.app';
+    console.log(location.hostname);
+</script>
+
+
 <body>
   <!-- Deux conteneurs carte superposés -->
   <div id="map-google" class="map-layer is-visible"></div>
@@ -515,15 +522,46 @@
         return { saved: files.length, method: 'localStorage', files };
       }
 
-      async function parseAndAddToMap(file) {
-        const text = await file.text();
-        const route = parseGpxToRoute(text, file.name);
-        routesData.push(route);
-        // Dessine immédiatement sur Google
-        if (gmap) drawSingleRouteOnGoogle(route);
-        // Et sur OSM si déjà initialisé
-        if (osmMap) drawSingleRouteOnOSM(route);
+  async function processGpxOnServer(file, mode = 'ele') {
+    const fd = new FormData();
+    fd.append('file', file, file.name);
+    fd.append('mode', mode); // 'ele' (défaut) ou 'attr'
+
+    // Si ton backend est sur un autre host/port, remplace par son URL complète
+    const API = window.API_BASE;
+    const res = await fetch(`${API}/gpx-to-alt`, {
+      method: 'POST',
+      body: fd,
+      });
+    if (!res.ok) throw new Error('Serveur: ' + res.status);
+    return await res.text(); // GPX modifié en texte
+  }
+
+  // Remplace la fonction parseAndAddToMap(file) existante par :
+  async function parseAndAddToMap(file) {
+    // 1) Appeler le backend pour obtenir le GPX enrichi (<ele> ou alt="")
+    const processedGpxText = await processGpxOnServer(file, 'ele'); // ou 'attr' si tu préfères
+
+    // 2) Parser le GPX retourné et l’ajouter à la carte
+    const route = parseGpxToRoute(processedGpxText, file.name.replace(/\.gpx$/i,'_with_alt.gpx'));
+    routesData.push(route);
+    if (gmap) drawSingleRouteOnGoogle(route);
+    if (osmMap) drawSingleRouteOnOSM(route);
+
+    // (Optionnel) Stocker localement la version modifiée
+    try {
+      if (navigator.storage && navigator.storage.getDirectory) {
+        const root = await navigator.storage.getDirectory();
+        const dir = await root.getDirectoryHandle('gpx', { create: true });
+        const handle = await dir.getFileHandle(file.name.replace(/\.gpx$/i,'_with_alt.gpx'), { create: true });
+        const w = await handle.createWritable();
+        await w.write(processedGpxText);
+        await w.close();
+      } else {
+        localStorage.setItem('gpx/' + file.name.replace(/\.gpx$/i,'_with_alt.gpx'), processedGpxText);
       }
+    } catch {}
+  }
 
       async function handleFilesSelected() {
         const files = fileInput.files;
@@ -800,16 +838,16 @@
     ============================ */
     function loadAndDrawGpxRoutes() {
       const gpxFiles = [
-        'resources/gpx/17D1.gpx','resources/gpx/17D2.gpx','resources/gpx/17D3.gpx','resources/gpx/17D4.gpx','resources/gpx/17D5.gpx','resources/gpx/17D6.gpx','resources/gpx/17D7.gpx',
-        'resources/gpx/20D1.gpx','resources/gpx/20D2.gpx','resources/gpx/20D3.gpx','resources/gpx/20D4.gpx',
-        'resources/gpx/21D1.gpx','resources/gpx/21D2.gpx','resources/gpx/21D3.gpx','resources/gpx/21D4.gpx','resources/gpx/21D5.gpx','resources/gpx/21D6.gpx','resources/gpx/21D7.gpx','resources/gpx/21D8.gpx',
-        'resources/gpx/23D1.gpx','resources/gpx/23D2.gpx','resources/gpx/23D3.gpx',
-        'resources/gpx/24D1.gpx','resources/gpx/24D2.gpx',
-        'resources/gpx/25D1.gpx','resources/gpx/25D2.gpx'
+        'gpx/17D1.gpx','gpx/17D2.gpx','gpx/17D3.gpx','gpx/17D4.gpx','gpx/17D5.gpx','gpx/17D6.gpx','gpx/17D7.gpx',
+        'gpx/20D1.gpx','gpx/20D2.gpx','gpx/20D3.gpx','gpx/20D4.gpx',
+        'gpx/21D1.gpx','gpx/21D2.gpx','gpx/21D3.gpx','gpx/21D4.gpx','gpx/21D5.gpx','gpx/21D6.gpx','gpx/21D7.gpx','gpx/21D8.gpx',
+        'gpx/23D1.gpx','gpx/23D2.gpx','gpx/23D3.gpx',
+        'gpx/24D1.gpx','gpx/24D2.gpx',
+        'gpx/25D1.gpx','gpx/25D2.gpx'
       ];
 
       gpxFiles.forEach(file => {
-        fetch(file).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
+        fetch(`${window.API_BASE}/${file}`).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
         .then(gpxText => {
           const route = parseGpxToRoute(gpxText, file);
           routesData.push(route);

@@ -127,7 +127,7 @@ main .projects {
 } 
 
 main .project1 {
-    background-image: url("../img/project1.jpg");
+    background-image: url("img/project1.jpg");
     background-origin: border-box;
     background-repeat: no-repeat;
     background-position: center;
@@ -140,7 +140,7 @@ main .project1 {
 }
 
 main .project2 {
-    background-image: url("../img/project2.jpg");
+    background-image: url("img/project2.jpg");
     background-origin: border-box;
     background-repeat: no-repeat;
     background-position: center;
